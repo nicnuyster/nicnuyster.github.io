@@ -1,0 +1,54 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+h1, h2, h3 {
+    color: #58a6ff;
+    font-weight: normal;
+}
+h1 {
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 10px;
+}
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+a:hover {
+    background-color: #58a6ff;
+    color: #0d1117;
+}
+.section {
+    margin-bottom: 30px;
+}
+.job-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+.job-title h3 {
+    margin: 0;
+    color: #e6edf3;
+}
+.date {
+    color: #8b949e;
+    font-size: 0.9em;
+}
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.skill-tag {
+    background-color: #21262d;
+    border: 1px solid #30363d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.85em;
+}
