@@ -1,146 +1,161 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Resume</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Alex Johnson – Resume</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Fixed header – always on top, transparent background, no seams -->
+  <header id="top-header">
+    <span id="active-section-name">About Me</span>
+  </header>
 
-    <header class="fixed-header">
-        <h1 id="active-section-title">About Me</h1>
-    </header>
+  <!-- Fixed right sidebar navigation -->
+  <nav id="sidebar" aria-label="Section navigation">
+    <ul>
+      <li><a href="#about" class="active">About Me</a></li>
+      <li><a href="#academic">Academic Experience</a></li>
+      <li><a href="#commerce">Commerce Experience</a></li>
+      <li><a href="#github">GitHub Projects</a></li>
+      <li><a href="#contact">Contact Info</a></li>
+    </ul>
+  </nav>
 
-    <nav class="sidebar">
-        <ul>
-            <li><a href="#about-me" class="active">About Me</a></li>
-            <li><a href="#academic-experience">Academic</a></li>
-            <li><a href="#commerce-experience">Commerce</a></li>
-            <li><a href="#github-projects">GitHub</a></li>
-            <li><a href="#contact-info">Contact</a></li>
-        </ul>
-    </nav>
+  <!-- Main content: each section occupies 100vh and is shown one at a time -->
+  <main id="main-content">
+    <!-- About Me section (soft blue) -->
+    <section id="about" class="section active" data-title="About Me">
+      <div class="section-content">
+        <h1>Alex Johnson</h1>
+        <p class="intro">
+          Creative software developer with a passion for clean interfaces and robust back‑end systems.
+          I love turning complex problems into simple, beautiful solutions. When I’m not coding,
+          you’ll find me hiking or experimenting with new recipes.
+        </p>
+        <!-- Simple image carousel -->
+        <div class="carousel" aria-label="Photo gallery">
+          <div class="carousel-images">
+            <div class="carousel-image" style="background:#7fb3d5;">Photo 1</div>
+            <div class="carousel-image" style="background:#a3c9e0;">Photo 2</div>
+          </div>
+          <button class="carousel-btn carousel-prev" aria-label="Previous photo">‹</button>
+          <button class="carousel-btn carousel-next" aria-label="Next photo">›</button>
+        </div>
+      </div>
+    </section>
 
-    <main class="content-wrapper">
+    <!-- Academic Experience (soft green) -->
+    <section id="academic" class="section" data-title="Academic Experience">
+      <div class="section-content">
+        <h2>Academic Experience</h2>
+        <div class="bubble-grid">
+          <div class="bubble">
+            <h3>B.Sc. in Computer Science</h3>
+            <p class="years">2016 – 2020</p>
+          </div>
+          <div class="bubble">
+            <h3>M.Sc. in Artificial Intelligence</h3>
+            <p class="years">2020 – 2022</p>
+          </div>
+          <div class="bubble">
+            <h3>Deep Learning for NLP</h3>
+            <p class="years">Published 2023</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <section id="about-me" class="section active" style="background-color: var(--color-about);">
-            <div class="content">
-                <h2>John Doe</h2>
-                <p>Hello! I am a passionate developer and researcher specializing in full-stack applications. This paragraph describes my background, my key interests in technology, and what drives me. Keep it concise, professional, and authentic.</p>
-                
-                <div class="carousel-container">
-                    <div class="carousel">
-                        <div class="carousel-track">
-                            <div class="carousel-slide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' font-size='0.1' text-anchor='middle' alignment-baseline='middle' fill='%23666666'%3EPlaceholder 1%3C/text%3E%3C/svg%3E" alt="Portrait Placeholder 1"></div>
-                            <div class="carousel-slide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23999999'/%3E%3Ctext x='50%25' y='50%25' font-size='0.1' text-anchor='middle' alignment-baseline='middle' fill='%23333333'%3EPlaceholder 2%3C/text%3E%3C/svg%3E" alt="Portrait Placeholder 2"></div>
-                        </div>
-                    </div>
-                    <button class="carousel-btn prev" aria-label="Previous image">&#10094;</button>
-                    <button class="carousel-btn next" aria-label="Next image">&#10095;</button>
-                </div>
+    <!-- Commerce Experience (soft orange/peach) -->
+    <section id="commerce" class="section" data-title="Commerce Experience">
+      <div class="section-content">
+        <h2>Commerce Experience</h2>
+        <div class="bubble-grid">
+          <div class="bubble">
+            <p>Worked as a full‑stack developer at TechCorp, building scalable web applications and leading a small team.</p>
+            <p class="dates">Jun 2020 – Dec 2022</p>
+          </div>
+          <div class="bubble">
+            <p>Currently self‑employed, offering freelance web development and consulting services for startups.</p>
+            <p class="dates">Jan 2023 – Present</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GitHub Projects (soft lavender) -->
+    <section id="github" class="section" data-title="GitHub Projects">
+      <div class="section-content">
+        <h2>GitHub Projects</h2>
+        <div class="bubble-grid">
+          <!-- Project 1 -->
+          <div class="bubble project-bubble">
+            <div class="project-img" aria-hidden="true"><svg viewBox="0 0 100 60"><rect width="100" height="60" fill="#d5c4e0"/><text x="50" y="35" text-anchor="middle" fill="#333">Proj1</text></svg></div>
+            <a href="https://github.com/alexj/portfolio" target="_blank" rel="noopener">Portfolio Website</a>
+            <p class="desc">A personal site built with HTML, CSS, and vanilla JS.</p>
+            <p class="stack"><strong>Stack:</strong> HTML, CSS, JavaScript</p>
+            <p class="status"><span class="status-dot completed"></span> Completed</p>
+          </div>
+          <!-- Project 2 -->
+          <div class="bubble project-bubble">
+            <div class="project-img"><svg viewBox="0 0 100 60"><rect width="100" height="60" fill="#d5c4e0"/><text x="50" y="35" text-anchor="middle" fill="#333">Proj2</text></svg></div>
+            <a href="https://github.com/alexj/taskmanager" target="_blank" rel="noopener">Task Manager App</a>
+            <p class="desc">A productivity app with drag‑and‑drop and real‑time sync.</p>
+            <p class="stack"><strong>Stack:</strong> React, Node.js, MongoDB</p>
+            <p class="status"><span class="status-dot in-progress"></span> In progress</p>
+          </div>
+          <!-- Project 3 -->
+          <div class="bubble project-bubble">
+            <div class="project-img"><svg viewBox="0 0 100 60"><rect width="100" height="60" fill="#d5c4e0"/><text x="50" y="35" text-anchor="middle" fill="#333">Proj3</text></svg></div>
+            <a href="https://github.com/alexj/ml-toolkit" target="_blank" rel="noopener">ML Toolkit</a>
+            <p class="desc">A collection of Python scripts for data preprocessing and model evaluation.</p>
+            <p class="stack"><strong>Stack:</strong> Python, scikit‑learn, Pandas</p>
+            <p class="status"><span class="status-dot on-hold"></span> On hold</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Info (soft rose) -->
+    <section id="contact" class="section" data-title="Contact Info">
+      <div class="section-content">
+        <h2>Contact Info</h2>
+        <div class="bubble-column">
+          <div class="bubble contact-bubble">
+            <span class="logo" aria-hidden="true">✈️</span>
+            <div class="contact-detail">
+              <a href="https://t.me/alex_j" target="_blank" rel="noopener">@alex_j</a>
+              <span class="preferred">🚀 Fastest response</span>
             </div>
-        </section>
-
-        <section id="academic-experience" class="section" style="background-color: var(--color-academic);">
-            <div class="content">
-                <h2>Academic Journey</h2>
-                <div class="bubble-grid">
-                    <div class="bubble">
-                        <h3>Master of Computer Science</h3>
-                        <p class="date">2018 – 2020</p>
-                        <p>Specialization in Artificial Intelligence. Thesis on machine learning models.</p>
-                    </div>
-                    <div class="bubble">
-                        <h3>Bachelor of Software Engineering</h3>
-                        <p class="date">2014 – 2018</p>
-                        <p>Core focus on software development lifecycles and algorithms.</p>
-                    </div>
-                    <div class="bubble">
-                        <h3>Published Paper</h3>
-                        <p class="date">2021</p>
-                        <p>"Novel Approach to Data Processing." Presented at ABC Conference.</p>
-                    </div>
-                </div>
+          </div>
+          <div class="bubble contact-bubble">
+            <span class="logo" aria-hidden="true">📞</span>
+            <div class="contact-detail">
+              <a href="tel:+1234567890">+1 234 567 890</a>
+              <span class="preferred">💬 Call or WhatsApp</span>
             </div>
-        </section>
-
-        <section id="commerce-experience" class="section" style="background-color: var(--color-commerce);">
-            <div class="content">
-                <h2>Professional Commerce</h2>
-                <div class="bubble-grid">
-                    <div class="bubble">
-                        <p>Past job: Lead Developer. Managing teams and delivering scalable web solutions.</p>
-                        <p class="date">Jun 2022 – Dec 2023</p>
-                    </div>
-                    <div class="bubble">
-                        <p>Current role: Independent Consultant. Delivering bespoke solutions to diverse clients.</p>
-                        <p class="date">Jan 2024 – Present</p>
-                    </div>
-                </div>
+          </div>
+          <div class="bubble contact-bubble">
+            <span class="logo" aria-hidden="true">🐙</span>
+            <div class="contact-detail">
+              <a href="https://github.com/alexj" target="_blank" rel="noopener">github.com/alexj</a>
+              <span class="preferred">⭐ Check my repos</span>
             </div>
-        </section>
-
-        <section id="github-projects" class="section" style="background-color: var(--color-github);">
-            <div class="content">
-                <h2>GitHub Showcase</h2>
-                <div class="bubble-grid projects">
-                    <div class="bubble project-bubble">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='2' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' font-size='0.2' text-anchor='middle' alignment-baseline='middle' fill='%23666666'%3EProject 1%3C/text%3E%3C/svg%3E" alt="Project Screenshot">
-                        <h3><a href="https://github.com/yourusername/project1" target="_blank">E-commerce API</a></h3>
-                        <p>RESTful API built with high performance in mind.</p>
-                        <p class="stack">Python (FastAPI), PostgreSQL</p>
-                        <p class="status completed"><span class="dot"></span>Completed</p>
-                    </div>
-                    <div class="bubble project-bubble">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='2' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23999999'/%3E%3Ctext x='50%25' y='50%25' font-size='0.2' text-anchor='middle' alignment-baseline='middle' fill='%23333333'%3EProject 2%3C/text%3E%3C/svg%3E" alt="Project Screenshot">
-                        <h3><a href="https://github.com/yourusername/project2" target="_blank">Data Dashboard</a></h3>
-                        <p>Real-time data visualization platform.</p>
-                        <p class="stack">JavaScript (React), D3.js</p>
-                        <p class="status progress"><span class="dot"></span>In Progress</p>
-                    </div>
-                    <div class="bubble project-bubble">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='2' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23666666'/%3E%3Ctext x='50%25' y='50%25' font-size='0.2' text-anchor='middle' alignment-baseline='middle' fill='%23eeeeee'%3EProject 3%3C/text%3E%3C/svg%3E" alt="Project Screenshot">
-                        <h3><a href="https://github.com/yourusername/project3" target="_blank">Mobile Utility</a></h3>
-                        <p>A mobile application for optimizing productivity.</p>
-                        <p class="stack">JavaScript (React Native)</p>
-                        <p class="status hold"><span class="dot"></span>On Hold</p>
-                    </div>
-                </div>
+          </div>
+          <div class="bubble contact-bubble">
+            <span class="logo" aria-hidden="true">✉️</span>
+            <div class="contact-detail">
+              <a href="mailto:alex@example.com">alex@example.com</a>
+              <span class="preferred">📧 For formal inquiries</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        <section id="contact-info" class="section" style="background-color: var(--color-contact);">
-            <div class="content">
-                <h2>Connect With Me</h2>
-                <div class="bubble-column">
-                    <div class="bubble contact-bubble">
-                        <svg class="contact-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0C5.346 0 0 5.346 0 11.944C0 18.542 5.346 23.888 11.944 23.888C18.542 23.888 23.888 18.542 23.888 11.944C23.888 5.346 18.542 0 11.944 0ZM17.29 8.21C17.155 9.605 15.65 16.42 15.115 19.33C14.89 20.575 14.43 20.99 13.985 21.03C13.02 21.12 12.285 20.4 11.355 19.79C10.155 19.005 9.485 18.51 8.32 17.745C6.965 16.85 7.845 16.36 8.615 15.56C8.815 15.35 12.3 12.185 12.365 11.91C12.375 11.875 12.38 11.75 12.31 11.685C12.24 11.62 12.14 11.645 12.065 11.66C11.965 11.68 10.375 12.735 7.29 14.81C6.84 15.12 6.435 15.27 6.07 15.26C5.67 15.25 4.895 15.035 4.31 14.845C3.595 14.615 3.03 14.49 3.08 14.09C3.105 13.88 3.395 13.665 3.945 13.44C7.33 11.97 9.585 10.995 10.725 10.53C13.985 9.195 14.66 8.965 15.105 8.955C15.205 8.955 15.42 8.98 15.565 9.095C15.685 9.19 15.715 9.32 15.73 9.41C15.745 9.495 15.76 9.69 15.75 9.87C15.64 11.025 15.43 12.635 15.29 13.78C15.255 14.07 15.12 14.28 14.935 14.29C14.73 14.305 14.545 14.165 14.37 14.025C14.18 13.875 13.97 13.71 13.755 13.56L12.44 12.6C12.28 12.485 12.13 12.375 11.99 12.27C11.91 12.21 11.83 12.155 11.765 12.1C11.675 12.03 11.59 11.965 11.525 11.9C11.33 11.71 11.39 11.61 11.55 11.455C11.625 11.385 11.71 11.31 11.805 11.23L13.88 9.29L14.295 8.9C14.35 8.845 14.395 8.795 14.415 8.76C14.44 8.72 14.43 8.68 14.415 8.655C14.4 8.635 14.37 8.625 14.35 8.62C14.33 8.615 14.295 8.615 14.27 8.62C14.24 8.62 14.215 8.63 14.2 8.64C14.195 8.64 14.19 8.645 14.185 8.65C14.095 8.72 13.91 8.865 12.67 9.885C12.565 9.97 12.455 10.06 12.345 10.15L11.55 10.79C11.465 10.86 11.385 10.93 11.31 10.99C11.13 11.155 11.005 11.155 10.875 11.075C10.77 11.01 10.665 10.95 10.56 10.885C10.4 10.79 10.245 10.69 10.095 10.6C9.645 10.315 9.22 10.05 8.92 9.875C8.61 9.69 8.32 9.53 8.1 9.42C7.94 9.34 7.82 9.285 7.74 9.255L7.61 9.195L7.545 9.175L7.53 9.17L7.51 9.16C7.475 9.14 7.42 9.11 7.375 9.075C7.29 9.015 7.215 8.93 7.25 8.87C7.26 8.85 7.275 8.835 7.305 8.825C7.36 8.8 7.44 8.805 7.505 8.82L8.29 9.07L8.91 9.27L9.89 9.585L11.455 10.08L14.015 10.915L15.355 11.36C15.825 11.52 16.14 11.645 16.48 11.8C16.82 11.955 17.075 12.095 17.26 12.245C17.445 12.395 17.51 12.55 17.5 12.695C17.49 12.83 17.395 12.97 17.165 13.11C16.93 13.25 16.63 13.385 16.29 13.515C15.95 13.645 15.545 13.765 15.015 13.91C14.85 13.955 14.655 13.99 14.41 14.03C14.16 14.07 13.84 14.1 13.435 14.12C13.03 14.135 12.525 14.13 11.905 14.095L11.19 14.065C10.7 14.03 10.045 13.97 9.87 13.96C9.13 13.92 8.75 13.89 8.525 13.87C8.165 13.835 8.08 13.71 8.24 13.59C8.36 13.5 8.55 13.395 8.78 13.285L9.67 12.87L10.375 12.54L11.41 12.05L12.78 11.41C13.25 11.19 13.62 11.015 13.94 10.87C14.25 10.71 14.485 10.6 14.67 10.53L15.11 10.375L15.34 10.305L15.42 10.29C15.485 10.28 15.535 10.265 15.54 10.21C15.545 10.15 15.495 10.105 15.435 10.06C15.365 10.015 15.28 10 15.155 9.995C15.03 9.995 14.87 10.02 14.65 10.1C14.43 10.185 14.095 10.3 13.675 10.45L12.805 10.74L11.785 11.085L10.435 11.535L9.07 11.985L7.74 12.425C7.26 12.585 6.795 12.735 6.425 12.855C6.04 12.97 5.765 13.06 5.615 13.11H5.61C5.39 13.18 5.14 13.22 4.905 13.235C4.665 13.25 4.455 13.245 4.315 13.2C4.18 13.155 4.135 13.07 4.165 12.985C4.195 12.9 4.3 12.82 4.45 12.74L4.85 12.56L5.345 12.335L6.08 12.005C6.18 11.96 6.305 11.905 6.455 11.835C6.61 11.765 6.785 11.685 6.995 11.59C7.21 11.49 7.45 11.38 7.7 11.27C7.96 11.16 8.24 11.035 8.535 10.905L9.5 10.495L10.5 10.075L12 9.455C12.44 9.27 12.84 9.1 13.195 8.95L13.88 8.66C14.28 8.49 14.595 8.355 14.86 8.25C15.12 8.145 15.34 8.08 15.55 8.05L15.61 8.045C15.82 8.045 16.035 8.065 16.245 8.11C16.45 8.15 16.65 8.215 16.83 8.315C17.02 8.41 17.155 8.53 17.24 8.68C17.325 8.825 17.34 8.995 17.29 9.2L17.29 8.21Z" fill="#3390EC"/></svg>
-                        <p><a href="https://t.me/yourusername" target="_blank">@yourusername</a></p>
-                        <p class="description">Fastest response 🚀</p>
-                    </div>
-                    <div class="bubble contact-bubble">
-                        <span class="contact-logo">📞</span>
-                        <p><a href="tel:+11234567890">+1 (123) 456-7890</a></p>
-                        <p class="description">Calls & text</p>
-                    </div>
-                    <div class="bubble contact-bubble">
-                        <svg class="contact-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12C0 17.302 3.438 21.8 8.207 23.387C8.807 23.498 9.027 23.127 9.027 22.812C9.027 22.531 9.017 21.593 9.012 20.603C5.673 21.328 4.968 19.125 4.968 19.125C4.422 17.737 3.633 17.367 3.633 17.367C2.543 16.623 3.715 16.638 3.715 16.638C4.918 16.723 5.552 17.871 5.552 17.871C6.623 19.704 8.36 19.175 9.043 18.868C9.153 18.092 9.463 17.563 9.807 17.263C7.143 16.96 4.342 15.928 4.342 11.328C4.342 10.017 4.81 8.947 5.578 8.107C5.455 7.803 5.043 6.582 5.697 4.933C5.697 4.933 6.705 4.61 9.003 6.162C9.96 5.897 10.983 5.765 12 5.76C13.017 5.765 14.04 5.897 14.998 6.162C17.293 4.61 18.3 4.933 18.3 4.933C18.955 6.582 18.543 7.803 18.422 8.107C19.192 8.947 19.657 10.017 19.657 11.328C19.657 15.94 16.852 16.957 14.18 17.253C14.612 17.625 15 18.36 15 19.493C15 21.118 14.985 22.433 14.985 22.812C14.985 23.13 15.202 23.503 15.81 23.385C20.575 21.797 24 17.3 24 12C24 5.373 18.627 0 12 0Z" fill="black"/></svg>
-                        <p><a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
-                        <p class="description">Code portfolio 💻</p>
-                    </div>
-                    <div class="bubble contact-bubble">
-                        <span class="contact-logo">📧</span>
-                        <p><a href="mailto:jdoe@example.com">jdoe@example.com</a></p>
-                        <p class="description">Official inquiries</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

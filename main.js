@@ -1,149 +1,119 @@
-// Function to manage section visibility and seamless transitions
-const SectionManager = (() => {
-    // Collect all relevant elements
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.sidebar a');
-    const headerTitle = document.getElementById('active-section-title');
-    const body = document.body;
+// script.js
 
-    // Track state
-    let isTransitioning = false;
+/* ---------- COLOUR MAP FOR SECTIONS ---------- */
+const sectionColors = {
+  about: '#D6EAF8',      // soft blue
+  academic: '#D5F5E3',   // soft green
+  commerce: '#FDEBD0',   // soft orange/peach
+  github: '#E8DAEF',     // soft lavender
+  contact: '#FADBD8'     // soft rose
+};
 
-    // Map section IDs to UI elements (background color and header title)
-    const sectionData = {
-        'about-me': { color: 'var(--color-about)', title: 'About Me' },
-        'academic-experience': { color: 'var(--color-academic)', title: 'Academic Experience' },
-        'commerce-experience': { color: 'var(--color-commerce)', title: 'Commerce Experience' },
-        'github-projects': { color: 'var(--color-github)', title: 'GitHub Projects' },
-        'contact-info': { color: 'var(--color-contact)', title: 'Contact Info' }
-    };
+/* ---------- DOM ELEMENTS ---------- */
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('#sidebar a');
+const headerSpan = document.getElementById('active-section-name');
+const body = document.body;
 
-    // Internal function to change the active section
-    const switchSection = (targetSectionId) => {
-        // Prevent multiple simultaneous transitions
-        if (isTransitioning) return;
-        isTransitioning = true;
+/**
+ * Activates a given section by id.
+ * - Removes 'active' class from all sections.
+ * - Adds 'active' to the target section.
+ * - Updates the body background colour (CSS transition handles the animation).
+ * - Updates the fixed header text and sidebar active state.
+ */
+function setActiveSection(sectionId) {
+  // Deactivate all sections
+  sections.forEach(sec => sec.classList.remove('active'));
 
-        const currentSection = document.querySelector('.section.active');
-        const targetSection = document.getElementById(targetSectionId);
+  // Activate the target section
+  const target = document.getElementById(sectionId);
+  if (!target) return;
 
-        // Do nothing if already on the active section
-        if (!targetSection || currentSection === targetSection) {
-            isTransitioning = false;
-            return;
-        }
+  target.classList.add('active');
 
-        // 1. Leave the current section:
-        // CSS transitions handle fading out and translating translateY.
-        currentSection.classList.remove('active');
+  // Change body background colour (transitioned via CSS)
+  body.style.backgroundColor = sectionColors[sectionId] || '#ffffff';
 
-        // 2. Transition the global state (body color and header title):
-        // CSS transitions the body's background-color smoothly.
-        const data = sectionData[targetSectionId];
-        if (data) {
-            body.style.backgroundColor = data.color;
-            headerTitle.textContent = data.title;
-        }
+  // Update header text (using data-title for consistency)
+  headerSpan.textContent = target.dataset.title || sectionId;
 
-        // 3. Update the navigation links in the sidebar
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === `#${targetSectionId}`) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
+  // Highlight the corresponding nav link
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${sectionId}`) {
+      link.classList.add('active');
+    }
+  });
+}
 
-        // 4. Enter the new section:
-        // CSS handles fading in and sliding into place (opacity 0 -> 1, translateY 20 -> 0).
-        targetSection.classList.add('active');
-
-        // Allow another transition after the current one finishes (CSS time)
-        setTimeout(() => {
-            isTransitioning = false;
-        }, 600); // Must match --transition-speed in style.css
-    };
-
-    // Initialize the manager
-    const init = () => {
-        // Smooth scroll handling for internal links (nav and hash links)
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href').substring(1);
-                
-                // If switching sections, block default jump and use transition logic
-                if (targetId && sectionData[targetId]) {
-                    e.preventDefault();
-                    switchSection(targetId);
-                    
-                    // Optional: Update the browser URL hash without causing a jump
-                    history.pushState(null, null, `#${targetId}`);
-                }
-            });
-        });
-
-        // Optional: Check hash on page load to initialize the correct section
-        const currentHash = window.location.hash.substring(1);
-        if (currentHash && sectionData[currentHash]) {
-            // Wait briefly for initial load/render
-            setTimeout(() => {
-                switchSection(currentHash);
-            }, 100);
-        }
-    };
-
-    // Return the public init method
-    return { init };
-})();
-
-// A separate simple manager for the carousel component
-const CarouselManager = (() => {
-    // Internal state tracking
-    let currentSlide = 0;
-    let track = null;
-    let slides = [];
-    let prevBtn = null;
-    let nextBtn = null;
-
-    const updateCarousel = () => {
-        if (!track || slides.length === 0) return;
-        const width = slides[0].getBoundingClientRect().width;
-        // Slide the track using CSS transform
-        track.style.transform = `translateX(-${currentSlide * width}px)`;
-    };
-
-    const init = () => {
-        // Initialize carousel elements within the DOM
-        const container = document.querySelector('.carousel-container');
-        if (!container) return; // Carousel might not be present
-
-        track = container.querySelector('.carousel-track');
-        slides = Array.from(track.children);
-        prevBtn = container.querySelector('.carousel-btn.prev');
-        nextBtn = container.querySelector('.carousel-btn.next');
-
-        if (slides.length < 2) return; // No need for buttons if 1 or 0 photos
-
-        // Set initial positions of buttons based on slide count
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : slides.length - 1;
-            updateCarousel();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide < slides.length - 1) ? currentSlide + 1 : 0;
-            updateCarousel();
-        });
-
-        // Optional: Handle window resize if images can change size
-        window.addEventListener('resize', updateCarousel);
-    };
-
-    return { init };
-})();
-
-// Start everything once the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    SectionManager.init();
-    CarouselManager.init();
+/* ---------- NAVIGATION CLICK HANDLER ---------- */
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const sectionId = link.getAttribute('href').substring(1); // remove '#'
+    setActiveSection(sectionId);
+  });
 });
+
+/* ---------- INITIALISE ON PAGE LOAD ---------- */
+// Start with the first section (About Me) visible
+setActiveSection('about');
+
+/* ---------- SIMPLE IMAGE CAROUSEL (About Me) ---------- */
+const carousel = document.querySelector('#about .carousel');
+if (carousel) {
+  const images = carousel.querySelectorAll('.carousel-image');
+  let currentIndex = 0;
+
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.style.opacity = i === index ? '1' : '0';
+    });
+  }
+
+  // initial display
+  showImage(currentIndex);
+
+  const prevBtn = carousel.querySelector('.carousel-prev');
+  const nextBtn = carousel.querySelector('.carousel-next');
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  });
+
+  // optional: keyboard accessibility
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevBtn.click();
+    } else if (e.key === 'ArrowRight') {
+      nextBtn.click();
+    }
+  });
+}
+
+/* ---------- PREVENT ACCIDENTAL PAGE SCROLL (wheel/touch) ---------- */
+// Since overflow:hidden is set on html/body, this ensures no default scroll behaviour
+window.addEventListener('wheel', (e) => {
+  // Allow scrolling inside the active section if it has overflow
+  const activeSection = document.querySelector('.section.active');
+  if (activeSection && activeSection.contains(e.target)) {
+    // The section itself handles the scroll; do nothing
+    return;
+  }
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchmove', (e) => {
+  const activeSection = document.querySelector('.section.active');
+  if (activeSection && activeSection.contains(e.target)) {
+    return;
+  }
+  e.preventDefault();
+}, { passive: false });
