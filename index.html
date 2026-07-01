@@ -3,65 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>My Portfolio | Resume</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>[Your Name]</h1>
+    <!-- Fixed Header: Displays current section name -->
+    <header id="main-header">
+        <h2 id="current-section-title">About Me</h2>
     </header>
 
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Write your plain text introduction here. This is a great place to summarize who you are, what you do, and what you are passionate about.</p>
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="0">About Me</a></li>
+            <li><a href="#" class="nav-link" data-section="1">Academic Experience</a></li>
+            <li><a href="#" class="nav-link" data-section="2">Commerce Experience</a></li>
+            <li><a href="#" class="nav-link" data-section="3">GitHub Projects</a></li>
+            <li><a href="#" class="nav-link" data-section="4">Contact Info</a></li>
+        </ul>
+    </nav>
+
+    <main id="content-wrapper">
+        <!-- Section 1: About Me -->
+        <section id="section-0" class="content-section active" style="--bg-color: #e3f2fd;">
+            <div class="container">
+                <h1>Jane Doe</h1>
+                <p class="bio-text">
+                    I am a passionate Full-Stack Developer and Researcher with a focus on creating intuitive user experiences and solving complex algorithmic problems. With a background in Computer Science, I bridge the gap between academic theory and commercial application.
+                </p>
+                
+                <!-- Carousel -->
+                <div class="carousel">
+                    <button class="carousel-btn prev" aria-label="Previous image">❮</button>
+                    <div class="carousel-track-container">
+                        <ul class="carousel-track">
+                            <li class="carousel-slide active-slide">
+                                <img src="https://via.placeholder.com/600x400/3498db/ffffff?text=Professional+Photo+1" alt="Professional Work">
+                            </li>
+                            <li class="carousel-slide">
+                                <img src="https://via.placeholder.com/600x400/2980b9/ffffff?text=Workshop+Photo+2" alt="Giving a Talk">
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next image">❯</button>
+                </div>
+            </div>
         </section>
 
-        <section id="education">
-            <h2>Education</h2>
-            <ul>
-                <li><strong>[Degree/Major]</strong> — [University/School Name] ([Year])</li>
-                <li><strong>[Degree/Major]</strong> — [University/School Name] ([Year])</li>
-            </ul>
+        <!-- Section 2: Academic Experience -->
+        <section id="section-1" class="content-section" style="--bg-color: #e8f5e9;">
+            <div class="container">
+                <h2>Academic Experience</h2>
+                <div class="grid academic-grid">
+                    <div class="bubble">
+                        <h3>Master of Computer Science</h3>
+                        <p class="years">2021 – 2023</p>
+                        <p>Specialization in Artificial Intelligence and Neural Networks.</p>
+                    </div>
+                    <div class="bubble">
+                        <h3>Bachelor of Software Engineering</h3>
+                        <p class="years">2017 – 2021</p>
+                        <p>Graduated with Honors. Focus on Distributed Systems.</p>
+                    </div>
+                    <div class="bubble">
+                        <h3>Research Paper: Scalable Web Architectures</h3>
+                        <p class="years">2022</p>
+                        <p>Published in the International Journal of Tech Trends.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="experience">
-            <h2>Previous Work</h2>
-            <ul>
-                <li>
-                    <strong>[Job Title]</strong> — [Company Name] ([Start Year] - [End Year])
-                    <p>Briefly describe your responsibilities and achievements here.</p>
-                </li>
-                <li>
-                    <strong>[Job Title]</strong> — [Company Name] ([Start Year] - [End Year])
-                    <p>Briefly describe your responsibilities and achievements here.</p>
-                </li>
-            </ul>
+        <!-- Section 3: Commerce Experience -->
+        <section id="section-2" class="content-section" style="--bg-color: #fff3e0;">
+            <div class="container">
+                <h2>Commerce Experience</h2>
+                <div class="grid commerce-grid">
+                    <div class="bubble">
+                        <p>Lead Developer at TechCorp. Managed a team of 5 to deliver a high-traffic e-commerce platform using microservices architecture.</p>
+                        <p class="years">Jun 2022 – Dec 2023</p>
+                    </div>
+                    <div class="bubble">
+                        <p>Self-employed Consultant. Designing custom SaaS solutions for international startups and optimizing cloud infrastructure costs.</p>
+                        <p class="years">Jan 2024 – Present</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="projects">
-            <h2>GitHub Projects</h2>
-            <ul>
-                <li>
-                    <strong><a href="[Your GitHub Repo URL]" target="_blank">Project Name</a></strong>
-                    <p>A short description of what this project does and the tech stack used.</p>
-                </li>
-                <li>
-                    <strong><a href="[Your GitHub Repo URL]" target="_blank">Project Name</a></strong>
-                    <p>A short description of what this project does and the tech stack used.</p>
-                </li>
-            </ul>
+        <!-- Section 4: GitHub Projects -->
+        <section id="section-3" class="content-section" style="--bg-color: #f3e5f5;">
+            <div class="container">
+                <h2>GitHub Projects</h2>
+                <div class="grid project-grid">
+                    <!-- Project 1 -->
+                    <div class="bubble project-bubble">
+                        <img src="https://via.placeholder.com/300x150/9b59b6/ffffff?text=Project+Alpha" alt="Project Alpha" class="project-img">
+                        <a href="https://github.com" target="_blank" class="project-link">Project Alpha</a>
+                        <p>A comprehensive dashboard for crypto tracking.</p>
+                        <p class="stack">React, Node.js, Tailwind</p>
+                        <div class="status">
+                            <span class="dot green"></span> Completed
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="bubble project-bubble">
+                        <img src="https://via.placeholder.com/300x150/8e44ad/ffffff?text=Project+Beta" alt="Project Beta" class="project-img">
+                        <a href="https://github.com" target="_blank" class="project-link">Project Beta</a>
+                        <p>Internal tool for automated reporting.</p>
+                        <p class="stack">Python, Flask, Docker</p>
+                        <div class="status">
+                            <span class="dot blue"></span> In Progress
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="bubble project-bubble">
+                        <img src="https://via.placeholder.com/300x150/7d3c98/ffffff?text=Project+Gamma" alt="Project Gamma" class="project-img">
+                        <a href="https://github.com" target="_blank" class="project-link">Project Gamma</a>
+                        <p>Mobile-first fitness tracking application.</p>
+                        <p class="stack">Swift, Firebase</p>
+                        <div class="status">
+                            <span class="dot yellow"></span> On Hold
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="contact">
-            <h2>Contact</h2>
-            <ul>
-                <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
-                <li><strong>LinkedIn:</strong> <a href="[Your LinkedIn URL]" target="_blank">Your Profile Name</a></li>
-            </ul>
+        <!-- Section 5: Contact Info -->
+        <section id="section-4" class="content-section" style="--bg-color: #fce4ec;">
+            <div class="container">
+                <h2>Contact Info</h2>
+                <div class="contact-list">
+                    <!-- Telegram -->
+                    <div class="bubble contact-bubble">
+                        <div class="contact-main">
+                            <span class="icon">✈️</span>
+                            <a href="https://t.me/username" target="_blank">@jane_doe</a>
+                        </div>
+                        <p class="pref">Fastest response 🚀</p>
+                    </div>
+                    <!-- Phone -->
+                    <div class="bubble contact-bubble">
+                        <div class="contact-main">
+                            <span class="icon">📞</span>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <p class="pref">Best for calls 📱</p>
+                    </div>
+                    <!-- GitHub -->
+                    <div class="bubble contact-bubble">
+                        <div class="contact-main">
+                            <span class="icon">💻</span>
+                            <a href="https://github.com/username" target="_blank">GitHub Profile</a>
+                        </div>
+                        <p class="pref">Review my work 🛠️</p>
+                    </div>
+                    <!-- Email -->
+                    <div class="bubble contact-bubble">
+                        <div class="contact-main">
+                            <span class="icon">✉️</span>
+                            <a href="mailto:jane@example.com">jane@example.com</a>
+                        </div>
+                        <p class="pref">Official inquiries 📧</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
+    <script src="script.js"></script>
 </body>
 </html>
