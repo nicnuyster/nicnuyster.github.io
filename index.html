@@ -3,1262 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Resume | Portfolio</title>
-
-    <!-- Font Awesome 6 CDN for icons (free, reliable) -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-
-    <style>
-        /* ============================================================
-           CSS CUSTOM PROPERTIES (DESIGN TOKENS)
-           ============================================================ */
-        :root {
-            /* Section background colors — distinct & professional */
-            --color-section-1: #1a1d23;
-            /* Deep charcoal — About Me */
-            --color-section-2: #1b4d3e;
-            /* Forest teal — Academic */
-            --color-section-3: #5d3a3a;
-            /* Rich burgundy — Commercial */
-            --color-section-4: #2c3e6b;
-            /* Classic navy — Projects */
-            --color-section-5: #4a2c5e;
-            /* Deep plum — Contact */
-
-            /* Card / Bubble colors */
-            --card-bg: #ffffff;
-            --card-text: #2d2d2d;
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
-            --card-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.28);
-            --card-radius-lg: 20px;
-            --card-radius-sm: 14px;
-
-            /* Typography */
-            --font-heading: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
-            --font-body: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
-            --text-light: #f1f1f1;
-            --text-muted: #cccccc;
-
-            /* Navigation */
-            --nav-dot-size: 14px;
-            --nav-dot-size-mobile: 10px;
-            --nav-active: #ffb347;
-            /* Warm amber for active indicator */
-
-            /* Spacing */
-            --section-padding: clamp(2rem, 6vw, 5rem);
-
-            /* Transition */
-            --ease-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --ease-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* ============================================================
-           GLOBAL RESET & BASE STYLES
-           ============================================================ */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            /* Enables native smooth scrolling for anchor links */
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            font-family: var(--font-body);
-            line-height: 1.6;
-            color: var(--text-light);
-            background: var(--color-section-1);
-            overflow-x: hidden;
-            /* Prevent horizontal scroll from nav or carousel */
-        }
-
-        /* ============================================================
-           SIDE NAVIGATION (FIXED ON RIGHT)
-           ============================================================ */
-        .side-nav {
-            position: fixed;
-            right: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        /* Each nav item */
-        .side-nav__item {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* The clickable dot */
-        .side-nav__link {
-            display: block;
-            width: var(--nav-dot-size);
-            height: var(--nav-dot-size);
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.45);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            cursor: pointer;
-            transition: all var(--ease-smooth);
-            text-decoration: none;
-            position: relative;
-            outline: none;
-        }
-
-        /* Hover & active states */
-        .side-nav__link:hover,
-        .side-nav__link:focus-visible {
-            background: var(--nav-active);
-            border-color: var(--nav-active);
-            transform: scale(1.35);
-            box-shadow: 0 0 14px rgba(255, 179, 71, 0.6);
-        }
-
-        .side-nav__link.active {
-            background: var(--nav-active);
-            border-color: var(--nav-active);
-            transform: scale(1.25);
-            box-shadow: 0 0 18px rgba(255, 179, 71, 0.7);
-        }
-
-        /* Label tooltip — hidden by default, shown on hover */
-        .side-nav__label {
-            position: absolute;
-            right: calc(var(--nav-dot-size) + 16px);
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.82);
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 20px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity var(--ease-smooth);
-            letter-spacing: 0.3px;
-        }
-
-        /* Show label on hover */
-        .side-nav__item:hover .side-nav__label {
-            opacity: 1;
-        }
-
-        /* ============================================================
-           MAIN CONTENT WRAPPER
-           ============================================================ */
-        .main-content {
-            /* No extra wrapper styles needed — sections stack vertically */;
-        }
-
-        /* ============================================================
-           SECTION BASE STYLES
-           ============================================================ */
-        .section {
-            min-height: 100vh;
-            /* Full-screen minimum */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: var(--section-padding);
-            padding-top: 0;
-            /* Sticky header handles top spacing */;
-            position: relative;
-            /* For sticky header context */
-        }
-
-        /* Assign distinct background colors */
-        .section--about {
-            background-color: var(--color-section-1);
-        }
-        .section--academic {
-            background-color: var(--color-section-2);
-        }
-        .section--commercial {
-            background-color: var(--color-section-3);
-        }
-        .section--projects {
-            background-color: var(--color-section-4);
-        }
-        .section--contact {
-            background-color: var(--color-section-5);
-        }
-
-        /* ============================================================
-           STICKY SECTION HEADERS
-           ============================================================ */
-        .section__header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            /* Sits above section content but below nav (z-index: 1000) */
-            width: 100%;
-            text-align: center;
-            padding: 1.2rem 1rem;
-            margin: 0;
-            font-family: var(--font-heading);
-            font-size: clamp(1.6rem, 4vw, 2.6rem);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            /* Match each section's background so it blends */
-            backdrop-filter: blur(6px);
-            /* Subtle blur for readability over content */
-            -webkit-backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
-
-        /* Slight shadow when header is "stuck" (we add via JS) */
-        .section__header.is-stuck {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-        }
-
-        /* Per-section header background overrides (match section bg) */
-        .section--about .section__header {
-            background-color: var(--color-section-1);
-        }
-        .section--academic .section__header {
-            background-color: var(--color-section-2);
-        }
-        .section--commercial .section__header {
-            background-color: var(--color-section-3);
-        }
-        .section--projects .section__header {
-            background-color: var(--color-section-4);
-        }
-        .section--contact .section__header {
-            background-color: var(--color-section-5);
-        }
-
-        /* ============================================================
-           SECTION INNER CONTENT CONTAINER
-           ============================================================ */
-        .section__content {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ============================================================
-           "BUBBLE" CARD STYLES (shared across sections)
-           ============================================================ */
-        .bubble {
-            background: var(--card-bg);
-            color: var(--card-text);
-            border-radius: var(--card-radius-lg);
-            padding: 1.8rem 2rem;
-            box-shadow: var(--card-shadow);
-            transition: transform var(--ease-bounce), box-shadow var(--ease-smooth);
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Subtle top accent line on each bubble */
-        .bubble::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 20px;
-            right: 20px;
-            height: 4px;
-            border-radius: 0 0 6px 6px;
-            opacity: 0.55;
-            transition: opacity var(--ease-smooth);
-        }
-
-        .bubble:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--card-shadow-hover);
-        }
-        .bubble:hover::before {
-            opacity: 1;
-        }
-
-        /* Accent color variants per section */
-        .section--academic .bubble::before {
-            background: #4db8a5;
-        }
-        .section--commercial .bubble::before {
-            background: #d4856b;
-        }
-        .section--projects .bubble::before {
-            background: #5b8def;
-        }
-        .section--contact .bubble::before {
-            background: #b98fd4;
-        }
-
-        /* Smaller bubbles (contact) */
-        .bubble--small {
-            border-radius: var(--card-radius-sm);
-            padding: 1.2rem 1.5rem;
-            min-width: 180px;
-        }
-
-        /* ============================================================
-           SECTION 1: ABOUT ME
-           ============================================================ */
-        .about__name {
-            font-family: var(--font-heading);
-            font-size: clamp(2.4rem, 6vw, 4rem);
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        .about__tagline {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        /* ---- Image Carousel ---- */
-        .carousel {
-            position: relative;
-            width: 100%;
-            max-width: 550px;
-            /* Comfortable width for a portrait */
-            aspect-ratio: 4 / 3;
-            /* 4:3 ratio for photos */
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            margin-bottom: 2rem;
-            background: #2a2d35;
-            /* Placeholder bg while images load */;
-        }
-
-        .carousel__track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-        }
-
-        .carousel__slide {
-            min-width: 100%;
-            height: 100%;
-            flex-shrink: 0;
-        }
-
-        .carousel__slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Carousel controls */
-        .carousel__btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 5;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            color: #fff;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all var(--ease-smooth);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.75;
-        }
-
-        .carousel__btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            opacity: 1;
-            border-color: #fff;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .carousel__btn--prev {
-            left: 12px;
-        }
-        .carousel__btn--next {
-            right: 12px;
-        }
-
-        /* Carousel dot indicators */
-        .carousel__dots {
-            position: absolute;
-            bottom: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 5;
-        }
-
-        .carousel__dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            border: none;
-            cursor: pointer;
-            transition: all var(--ease-smooth);
-            padding: 0;
-        }
-
-        .carousel__dot.active {
-            background: #fff;
-            transform: scale(1.3);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-        }
-
-        /* ============================================================
-           SECTION 2: ACADEMIC EXPERIENCE — 3 Bubbles
-           ============================================================ */
-        .bubble-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.8rem;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .bubble-grid__item {
-            /* Each bubble in the grid */;
-        }
-
-        .bubble__title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            color: #1a1a1a;
-        }
-
-        .bubble__years {
-            display: inline-block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-            background: #3a3a3a;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 0.8rem;
-            letter-spacing: 0.3px;
-        }
-
-        .bubble__desc {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        /* ============================================================
-           SECTION 3: COMMERCIAL EXPERIENCE — 1 Large Bubble
-           ============================================================ */
-        .bubble--large {
-            max-width: 750px;
-            width: 100%;
-            padding: 2.2rem 2.5rem;
-        }
-
-        .bubble--large .bubble__title {
-            font-size: 1.6rem;
-        }
-
-        .bubble--large .bubble__desc {
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        /* ============================================================
-           SECTION 4: GITHUB PROJECTS — Grid of 3 Bubbles
-           ============================================================ */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.8rem;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .project-bubble {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            /* Clip the image to rounded top corners */;
-        }
-
-        .project-bubble__img {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            object-fit: cover;
-            display: block;
-            background: #e0e0e0;
-            /* Placeholder */;
-            border-radius: var(--card-radius-lg) var(--card-radius-lg) 0 0;
-        }
-
-        .project-bubble__body {
-            padding: 1.2rem 1.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            flex: 1;
-        }
-
-        .project-bubble__name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            text-decoration: none;
-            transition: color var(--ease-smooth);
-        }
-
-        .project-bubble__name:hover {
-            color: #3b6fd4;
-            text-decoration: underline;
-        }
-
-        .project-bubble__stack {
-            font-size: 0.85rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .project-bubble__status {
-            display: inline-block;
-            align-self: flex-start;
-            font-size: 0.78rem;
-            font-weight: 700;
-            padding: 5px 14px;
-            border-radius: 20px;
-            letter-spacing: 0.4px;
-            text-transform: uppercase;
-        }
-
-        .status--completed {
-            background: #d4f5e2;
-            color: #1a6b3a;
-        }
-        .status--in-progress {
-            background: #fff3d6;
-            color: #b8780a;
-        }
-
-        /* ============================================================
-           SECTION 5: CONTACT INFO — 4 Small Bubbles
-           ============================================================ */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.4rem;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .contact-bubble {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 1.4rem;
-            text-decoration: none;
-            color: var(--card-text);
-            cursor: pointer;
-            transition: all var(--ease-bounce);
-            background: var(--card-bg);
-            border-radius: var(--card-radius-sm);
-            box-shadow: var(--card-shadow);
-        }
-
-        .contact-bubble:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .contact-bubble__icon {
-            font-size: 1.8rem;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            flex-shrink: 0;
-            color: #fff;
-        }
-
-        /* Icon background colors */
-        .icon--telegram {
-            background: #229ED9;
-        }
-        .icon--phone {
-            background: #34a853;
-        }
-        .icon--github {
-            background: #24292e;
-        }
-        .icon--email {
-            background: #d44638;
-        }
-
-        .contact-bubble__info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .contact-bubble__label {
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .contact-bubble__detail {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .contact-bubble__emoji {
-            font-size: 0.85rem;
-        }
-
-        /* ============================================================
-           FOOTER (tiny, optional)
-           ============================================================ */
-        .footer-note {
-            text-align: center;
-            padding: 0.8rem;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.3px;
-        }
-
-        /* ============================================================
-           RESPONSIVE BREAKPOINTS
-           ============================================================ */
-        @media (max-width: 768px) {
-            .side-nav {
-                right: 10px;
-                gap: 14px;
-            }
-
-            .side-nav__link {
-                width: var(--nav-dot-size-mobile);
-                height: var(--nav-dot-size-mobile);
-                border-width: 1.5px;
-            }
-
-            .side-nav__label {
-                display: none;
-                /* Hide labels on mobile to save space */;
-            }
-
-            .section {
-                padding: 1rem;
-                padding-top: 0;
-            }
-
-            .section__header {
-                padding: 0.9rem 0.5rem;
-                font-size: 1.3rem;
-            }
-
-            .carousel {
-                max-width: 100%;
-                aspect-ratio: 3 / 2;
-            }
-
-            .carousel__btn {
-                width: 34px;
-                height: 34px;
-                font-size: 1rem;
-            }
-
-            .bubble-grid,
-            .project-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-                /* Stack on mobile */
-                gap: 1.2rem;
-            }
-
-            .bubble--large {
-                padding: 1.4rem 1.2rem;
-            }
-
-            .about__name {
-                font-size: 1.8rem;
-            }
-
-            .contact-bubble {
-                padding: 1rem 1.2rem;
-                gap: 0.8rem;
-            }
-
-            .contact-bubble__icon {
-                font-size: 1.4rem;
-                width: 36px;
-                height: 36px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .side-nav {
-                right: 5px;
-                gap: 10px;
-            }
-
-            .section__header {
-                font-size: 1.1rem;
-                padding: 0.7rem 0.3rem;
-            }
-
-            .carousel__btn {
-                width: 28px;
-                height: 28px;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+    <title>CV - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ============================================================
-    SIDE NAVIGATION — Fixed on right edge
-    ============================================================ -->
-    <nav class="side-nav" aria-label="Section navigation">
-        <div class="side-nav__item">
-            <a href="#about" class="side-nav__link active" data-section="about" aria-label="About Me"></a>
-            <span class="side-nav__label">About Me</span>
-        </div>
-        <div class="side-nav__item">
-            <a href="#academic" class="side-nav__link" data-section="academic" aria-label="Academic Experience"></a>
-            <span class="side-nav__label">Academic</span>
-        </div>
-        <div class="side-nav__item">
-            <a href="#commercial" class="side-nav__link" data-section="commercial" aria-label="Commercial Experience"></a>
-            <span class="side-nav__label">Commercial</span>
-        </div>
-        <div class="side-nav__item">
-            <a href="#projects" class="side-nav__link" data-section="projects" aria-label="GitHub Projects"></a>
-            <span class="side-nav__label">Projects</span>
-        </div>
-        <div class="side-nav__item">
-            <a href="#contact" class="side-nav__link" data-section="contact" aria-label="Contact Info"></a>
-            <span class="side-nav__label">Contact</span>
-        </div>
+    <!-- Dynamic gradient overlay -->
+    <div class="gradient-overlay" id="gradientOverlay"></div>
+
+    <!-- Navigation dots -->
+    <nav class="nav-dots" id="navDots" aria-label="Section navigation">
+        <span class="nav-dot" data-index="0" title="About Me"></span>
+        <span class="nav-dot" data-index="1" title="Academic"></span>
+        <span class="nav-dot" data-index="2" title="Commerce"></span>
+        <span class="nav-dot" data-index="3" title="GitHub Projects"></span>
+        <span class="nav-dot" data-index="4" title="Contact Info"></span>
     </nav>
 
-    <!-- ============================================================
-    MAIN CONTENT — 5 Full-Screen Sections
-    ============================================================ -->
-    <main class="main-content">
+    <main class="scroll-container" id="scrollContainer">
 
-        <!-- ========== SECTION 1: ABOUT ME ========== -->
-        <section id="about" class="section section--about">
-            <h2 class="section__header">About Me</h2>
-            <div class="section__content">
-                <!-- Name -->
-                <h1 class="about__name">Alexandra Chen</h1>
-                <p class="about__tagline">
-                    Full-Stack Developer · Open-Source Enthusiast · Lifelong Learner
-                </p>
-
-                <!-- Image Carousel -->
-                <div class="carousel" aria-label="Photo gallery">
-                    <div class="carousel__track" id="carouselTrack">
-                        <!-- Slide 0 -->
-                        <div class="carousel__slide">
-                            <img
-                            src="https://picsum.photos/seed/portrait1/600/450"
-                            alt="Professional headshot"
-                            loading="lazy"
-                            >
-                        </div>
-                        <!-- Slide 1 -->
-                        <div class="carousel__slide">
-                            <img
-                            src="https://picsum.photos/seed/portrait2/600/450"
-                            alt="Speaking at a conference"
-                            loading="lazy"
-                            >
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="carousel__slide">
-                            <img
-                            src="https://picsum.photos/seed/portrait3/600/450"
-                            alt="Casual photo"
-                            loading="lazy"
-                            >
+        <!-- Section 0: About Me -->
+        <section class="snap-section" id="section-0" data-index="0">
+            <div class="section-content fade-content">
+                <h2 class="section-heading">About Me</h2>
+                <div class="about-layout">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container" id="carousel">
+                            <div class="carousel-slides" id="carouselSlides">
+                                <img src="images/about1.jpg" alt="About photo 1" class="carousel-slide active">
+                                <img src="images/about2.jpg" alt="About photo 2" class="carousel-slide">
+                                <img src="images/about3.jpg" alt="About photo 3" class="carousel-slide">
+                            </div>
+                            <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous image">&#10094;</button>
+                            <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next image">&#10095;</button>
+                            <div class="carousel-indicators" id="carouselIndicators">
+                                <span class="carousel-dot active" data-slide="0"></span>
+                                <span class="carousel-dot" data-slide="1"></span>
+                                <span class="carousel-dot" data-slide="2"></span>
+                            </div>
                         </div>
                     </div>
-                    <!-- Carousel controls -->
-                    <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Previous photo">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Next photo">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                    <!-- Dot indicators -->
-                    <div class="carousel__dots" id="carouselDots">
-                        <button class="carousel__dot active" data-index="0" aria-label="Photo 1"></button>
-                        <button class="carousel__dot" data-index="1" aria-label="Photo 2"></button>
-                        <button class="carousel__dot" data-index="2" aria-label="Photo 3"></button>
-                    </div>
-                </div>
-
-                <!-- Bio paragraph -->
-                <p style="max-width:650px;text-align:center;color:#ccc;font-size:1rem;line-height:1.7;">
-                    I'm a passionate software engineer with over 6 years of experience building
-                    scalable web applications. I thrive at the intersection of design and
-                    engineering, crafting intuitive user interfaces backed by robust,
-                    maintainable code. When I'm not coding, you'll find me contributing to
-                    open-source projects, mentoring junior developers, or exploring the latest
-                    in cloud architecture and AI. <em>(Replace this placeholder text with your
-                    own bio.)</em>
-                </p>
-            </div>
-        </section>
-
-        <!-- ========== SECTION 2: ACADEMIC EXPERIENCE ========== -->
-        <section id="academic" class="section section--academic">
-            <h2 class="section__header">Academic Experience</h2>
-            <div class="section__content">
-                <div class="bubble-grid">
-                    <!-- Bubble 1: Bachelor's -->
-                    <div class="bubble bubble-grid__item">
-                        <h3 class="bubble__title">Bachelor of Science — Computer Science</h3>
-                        <span class="bubble__years">2014 – 2018</span>
-                        <p class="bubble__desc">
-                            Graduated with honours from State University. Focused on algorithms,
-                            data structures, and software engineering fundamentals.
-                        </p>
-                    </div>
-                    <!-- Bubble 2: Master's -->
-                    <div class="bubble bubble-grid__item">
-                        <h3 class="bubble__title">Master of Science — Artificial Intelligence</h3>
-                        <span class="bubble__years">2018 – 2020</span>
-                        <p class="bubble__desc">
-                            Specialised in machine learning and natural language processing.
-                            Thesis on transformer-based models for code generation.
-                        </p>
-                    </div>
-                    <!-- Bubble 3: Published Paper -->
-                    <div class="bubble bubble-grid__item">
-                        <h3 class="bubble__title">Published Paper — IEEE Access</h3>
-                        <span class="bubble__years">2021</span>
-                        <p class="bubble__desc">
-                            "Efficient Code Summarisation Using Fine-Tuned LLMs" — presented at
-                            the International Conference on Software Engineering.
-                        </p>
+                    <div class="about-text">
+                        <p>Hello! I'm a passionate developer with a love for creating beautiful, functional web experiences. I specialize in front-end development and enjoy bringing creative ideas to life through clean code and thoughtful design. When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee.</p>
+                        <p>With over 5 years of experience in the industry, I've worked across startups and established companies, always striving to build products that make a real difference in people's lives.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ========== SECTION 3: COMMERCIAL EXPERIENCE ========== -->
-        <section id="commercial" class="section section--commercial">
-            <h2 class="section__header">Commercial Experience</h2>
-            <div class="section__content">
-                <div class="bubble bubble--large">
-                    <h3 class="bubble__title">Senior Front-End Developer — TechCorp Inc.</h3>
-                    <span class="bubble__years">June 2020 – Present</span>
-                    <p class="bubble__desc">
-                        Lead the front-end architecture for a SaaS platform serving over 200k
-                        monthly active users. Responsibilities include: designing and
-                        implementing reusable component libraries in React and TypeScript,
-                        mentoring a team of 5 junior developers, conducting code reviews,
-                        optimising Core Web Vitals (achieved 95+ Lighthouse score), and
-                        collaborating closely with UX designers to ship accessible, responsive
-                        features. Drove a full migration from a legacy jQuery codebase to a
-                        modern React + Zustand stack, reducing bundle size by 40%.
-                    </p>
+        <!-- Section 1: Academic -->
+        <section class="snap-section" id="section-1" data-index="1">
+            <div class="section-content fade-content">
+                <h2 class="section-heading">Academic</h2>
+                <div class="bubbles-row three-bubbles">
+                    <div class="bubble academic-bubble">
+                        <h3 class="bubble-title">University of Example</h3>
+                        <p class="bubble-type">Bachelor's Degree</p>
+                        <p class="bubble-desc">Graduated with honors in Computer Science, focusing on software engineering and human-computer interaction. Dean's List for 6 consecutive semesters.</p>
+                    </div>
+                    <div class="bubble academic-bubble">
+                        <h3 class="bubble-title">Tech Institute</h3>
+                        <p class="bubble-type">Master's Degree</p>
+                        <p class="bubble-desc">Advanced studies in Artificial Intelligence and Machine Learning with published research in natural language processing and computer vision.</p>
+                    </div>
+                    <div class="bubble academic-bubble">
+                        <h3 class="bubble-title">Design Academy</h3>
+                        <p class="bubble-type">Certification</p>
+                        <p class="bubble-desc">Professional certification in UI/UX Design, emphasizing user-centered design principles and accessibility standards.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ========== SECTION 4: GITHUB PROJECTS ========== -->
-        <section id="projects" class="section section--projects">
-            <h2 class="section__header">GitHub Projects</h2>
-            <div class="section__content">
-                <div class="project-grid">
-                    <!-- Project 1 -->
+        <!-- Section 2: Commerce -->
+        <section class="snap-section" id="section-2" data-index="2">
+            <div class="section-content fade-content">
+                <h2 class="section-heading">Commerce</h2>
+                <div class="bubbles-row two-bubbles">
+                    <div class="bubble commerce-bubble">
+                        <h3 class="bubble-title">TechCorp Inc.</h3>
+                        <p class="bubble-type">Senior Developer</p>
+                        <p class="bubble-desc">Led a team of 5 developers to build scalable web applications serving over 100,000 users. Implemented CI/CD pipelines and improved deployment efficiency by 40%. Architected microservices that reduced server costs by 30% while improving uptime to 99.9%.</p>
+                    </div>
+                    <div class="bubble commerce-bubble">
+                        <h3 class="bubble-title">StartupXYZ</h3>
+                        <p class="bubble-type">Full Stack Engineer</p>
+                        <p class="bubble-desc">Built the company's flagship product from the ground up using React, Node.js, and PostgreSQL. Managed cloud infrastructure on AWS, scaling the platform from zero to 50,000 active users within the first year of launch.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: GitHub Projects -->
+        <section class="snap-section" id="section-3" data-index="3">
+            <div class="section-content fade-content">
+                <h2 class="section-heading">GitHub Projects</h2>
+                <div class="projects-grid">
                     <div class="bubble project-bubble">
-                        <img
-                        class="project-bubble__img"
-                        src="https://picsum.photos/seed/project1/400/250"
-                        alt="Screenshot of TaskFlow project"
-                        loading="lazy"
-                        >
-                        <div class="project-bubble__body">
-                            <a href="https://github.com/username/taskflow" class="project-bubble__name" target="_blank" rel="noopener">
-                                TaskFlow <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7rem;"></i>
-                            </a>
-                            <span class="project-bubble__stack">React · TypeScript · Firebase</span>
-                            <span class="project-bubble__status status--completed">Completed</span>
-                        </div>
+                        <h3 class="bubble-title">Project Alpha</h3>
+                        <p class="bubble-type">Web App</p>
+                        <p class="bubble-tech">React, Node.js, WebSockets</p>
+                        <p class="bubble-desc">A real-time collaboration tool for remote teams with video chat, document sharing, and integrated task management.</p>
                     </div>
-                    <!-- Project 2 -->
                     <div class="bubble project-bubble">
-                        <img
-                        class="project-bubble__img"
-                        src="https://picsum.photos/seed/project2/400/250"
-                        alt="Screenshot of CodeLint project"
-                        loading="lazy"
-                        >
-                        <div class="project-bubble__body">
-                            <a href="https://github.com/username/codelint" class="project-bubble__name" target="_blank" rel="noopener">
-                                CodeLint <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7rem;"></i>
-                            </a>
-                            <span class="project-bubble__stack">Python · AST · CLI Tool</span>
-                            <span class="project-bubble__status status--in-progress">In Progress</span>
-                        </div>
+                        <h3 class="bubble-title">DataViz Pro</h3>
+                        <p class="bubble-type">Library</p>
+                        <p class="bubble-tech">TypeScript, D3.js, Canvas</p>
+                        <p class="bubble-desc">An open-source data visualization library for creating interactive charts and dashboards with GPU-accelerated rendering.</p>
                     </div>
-                    <!-- Project 3 -->
                     <div class="bubble project-bubble">
-                        <img
-                        class="project-bubble__img"
-                        src="https://picsum.photos/seed/project3/400/250"
-                        alt="Screenshot of WeatherNow project"
-                        loading="lazy"
-                        >
-                        <div class="project-bubble__body">
-                            <a href="https://github.com/username/weathernow" class="project-bubble__name" target="_blank" rel="noopener">
-                                WeatherNow <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7rem;"></i>
-                            </a>
-                            <span class="project-bubble__stack">Vue.js · Express · OpenWeather API</span>
-                            <span class="project-bubble__status status--completed">Completed</span>
-                        </div>
+                        <h3 class="bubble-title">CloudNotes</h3>
+                        <p class="bubble-type">Mobile App</p>
+                        <p class="bubble-tech">Flutter, Firebase, GraphQL</p>
+                        <p class="bubble-desc">A cross-platform note-taking app with real-time cloud sync, markdown support, and collaborative editing features.</p>
+                    </div>
+                    <div class="bubble project-bubble">
+                        <h3 class="bubble-title">DevOps Toolkit</h3>
+                        <p class="bubble-type">CLI Tool</p>
+                        <p class="bubble-tech">Python, Docker, Kubernetes</p>
+                        <p class="bubble-desc">A command-line toolkit for automating DevOps workflows, server provisioning, and container orchestration.</p>
+                    </div>
+                    <div class="bubble project-bubble">
+                        <h3 class="bubble-title">EcoTracker</h3>
+                        <p class="bubble-type">Web App</p>
+                        <p class="bubble-tech">Vue.js, Express, MongoDB</p>
+                        <p class="bubble-desc">An environmental impact tracker that helps users monitor and reduce their carbon footprint through personalised insights.</p>
+                    </div>
+                    <div class="bubble project-bubble">
+                        <h3 class="bubble-title">PixelForge</h3>
+                        <p class="bubble-type">Desktop App</p>
+                        <p class="bubble-tech">Electron, Three.js, WASM</p>
+                        <p class="bubble-desc">A lightweight 3D modelling tool for indie game developers with real-time preview and export to multiple formats.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ========== SECTION 5: CONTACT INFO ========== -->
-        <section id="contact" class="section section--contact">
-            <h2 class="section__header">Contact Info</h2>
-            <div class="section__content">
-                <div class="contact-grid">
-                    <!-- Telegram -->
-                    <a href="https://t.me/yourusername" class="contact-bubble" target="_blank" rel="noopener">
-                        <div class="contact-bubble__icon icon--telegram">
-                            <i class="fa-brands fa-telegram-plane"></i>
+        <!-- Section 4: Contact Info -->
+        <section class="snap-section" id="section-4" data-index="4">
+            <div class="section-content fade-content">
+                <h2 class="section-heading">Contact Info</h2>
+                <p class="contact-intro">I'm always open to new opportunities, collaborations, and interesting conversations. Feel free to reach out through any of the channels below — I typically respond within 24 hours.</p>
+                <div class="contact-bubbles">
+                    <div class="bubble contact-bubble">
+                        <span class="contact-icon" aria-hidden="true">📧</span>
+                        <div class="contact-details">
+                            <a href="mailto:hello@example.com" class="contact-link">📧 Email me at hello@example.com</a>
                         </div>
-                        <div class="contact-bubble__info">
-                            <span class="contact-bubble__label">Telegram</span>
-                            <span class="contact-bubble__detail">@yourusername</span>
-                            <span class="contact-bubble__emoji">⚡ Fastest</span>
+                    </div>
+                    <div class="bubble contact-bubble">
+                        <span class="contact-icon" aria-hidden="true">📱</span>
+                        <div class="contact-details">
+                            <a href="tel:+1234567890" class="contact-link">📱 Call me at +1 (234) 567-890</a>
                         </div>
-                    </a>
-                    <!-- Phone Number -->
-                    <a href="tel:+1234567890" class="contact-bubble">
-                        <div class="contact-bubble__icon icon--phone">
-                            <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="bubble contact-bubble">
+                        <span class="contact-icon" aria-hidden="true">💬</span>
+                        <div class="contact-details">
+                            <a href="https://t.me/username" class="contact-link" target="_blank" rel="noopener noreferrer">💬 Message me on Telegram @username</a>
                         </div>
-                        <div class="contact-bubble__info">
-                            <span class="contact-bubble__label">Phone</span>
-                            <span class="contact-bubble__detail">+1 (234) 567-890</span>
-                            <span class="contact-bubble__emoji">👌 OK</span>
+                    </div>
+                    <div class="bubble contact-bubble">
+                        <span class="contact-icon" aria-hidden="true">💼</span>
+                        <div class="contact-details">
+                            <a href="https://linkedin.com/in/username" class="contact-link" target="_blank" rel="noopener noreferrer">💼 Connect on LinkedIn /username</a>
                         </div>
-                    </a>
-                    <!-- GitHub -->
-                    <a href="https://github.com/username" class="contact-bubble" target="_blank" rel="noopener">
-                        <div class="contact-bubble__icon icon--github">
-                            <i class="fa-brands fa-github"></i>
-                        </div>
-                        <div class="contact-bubble__info">
-                            <span class="contact-bubble__label">GitHub</span>
-                            <span class="contact-bubble__detail">github.com/username</span>
-                            <span class="contact-bubble__emoji">🛋️ Most Comfortable</span>
-                        </div>
-                    </a>
-                    <!-- Email -->
-                    <a href="mailto:hello@example.com" class="contact-bubble">
-                        <div class="contact-bubble__icon icon--email">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                        <div class="contact-bubble__info">
-                            <span class="contact-bubble__label">Email</span>
-                            <span class="contact-bubble__detail">hello@example.com</span>
-                            <span class="contact-bubble__emoji">🛋️ Most Comfortable</span>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Tiny footer -->
-    <div class="footer-note">
-        &copy; 2026 Alexandra Chen &mdash; Hosted on GitHub Pages
-    </div>
-
-    <!-- ============================================================
-    VANILLA JAVASCRIPT
-    ============================================================ -->
-    <script>
-        (function () {
-            // ========================================================
-            // 1. IMAGE CAROUSEL LOGIC
-            // ========================================================
-            const track = document.getElementById('carouselTrack');
-            const prevBtn = document.getElementById('carouselPrev');
-            const nextBtn = document.getElementById('carouselNext');
-            const dotsContainer = document.getElementById('carouselDots');
-            const dotButtons = dotsContainer.querySelectorAll('.carousel__dot');
-            const totalSlides = dotButtons.length;
-
-            let currentSlide = 0;
-            let autoPlayInterval;
-            const AUTO_PLAY_DELAY = 5000; // 5 seconds between auto-slides
-
-            /**
-             * Updates the carousel position and active dot indicator.
-             * @param {number} index - Target slide index (0-based).
-             */
-            function goToSlide(index) {
-                // Clamp index within valid range
-                if (index < 0) index = totalSlides - 1;
-                if (index >= totalSlides) index = 0;
-                currentSlide = index;
-
-                // Translate the track
-                track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-                // Update dot indicators
-                dotButtons.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-
-            /** Move to the previous slide */
-            function prevSlide() {
-                goToSlide(currentSlide - 1);
-                resetAutoPlay();
-            }
-
-            /** Move to the next slide */
-            function nextSlide() {
-                goToSlide(currentSlide + 1);
-                resetAutoPlay();
-            }
-
-            /** Reset the auto-play timer so it doesn't interrupt manual navigation immediately */
-            function resetAutoPlay() {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
-            }
-
-            // Event listeners for carousel buttons
-            prevBtn.addEventListener('click', prevSlide);
-            nextBtn.addEventListener('click', nextSlide);
-
-            // Event listeners for dot indicators
-            dotButtons.forEach((dot) => {
-                dot.addEventListener('click', function () {
-                    const index = parseInt(this.getAttribute('data-index'), 10);
-                    goToSlide(index);
-                    resetAutoPlay();
-                });
-            });
-
-            // Keyboard navigation for carousel (left/right arrow keys)
-            document.addEventListener('keydown', function (e) {
-                // Only handle if the carousel is reasonably visible
-                const carousel = document.querySelector('.carousel');
-                if (!carousel) return;
-                const rect = carousel.getBoundingClientRect();
-                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-                if (!isVisible) return;
-
-                if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    prevSlide();
-                } else if (e.key === 'ArrowRight') {
-                    e.preventDefault();
-                    nextSlide();
-                }
-            });
-
-            // Start auto-play
-            autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
-
-            // Pause auto-play when user hovers over the carousel
-            const carouselEl = document.querySelector('.carousel');
-            carouselEl.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-            carouselEl.addEventListener('mouseleave', () => {
-                autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
-            });
-
-            // ========================================================
-            // 2. INTERSECTION OBSERVER — Active Nav Highlighting
-            //    & Sticky Header "stuck" shadow
-            // ========================================================
-            const allSections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.side-nav__link');
-            const sectionHeaders = document.querySelectorAll('.section__header');
-
-            /**
-             * Observer for sections — updates active nav dot based on
-             * which section occupies the most of the viewport.
-             */
-            const sectionObserver = new IntersectionObserver(
-                (entries) => {
-                    // We track which section has the highest intersection ratio
-                    let maxRatio = 0;
-                    let mostVisibleId = null;
-
-                    entries.forEach((entry) => {
-                        if (entry.intersectionRatio > maxRatio) {
-                            maxRatio = entry.intersectionRatio;
-                            mostVisibleId = entry.target.id;
-                        }
-                    });
-
-                    if (mostVisibleId) {
-                        navLinks.forEach((link) => {
-                            const isActive = link.getAttribute('data-section') === mostVisibleId;
-                            link.classList.toggle('active', isActive);
-                        });
-                    }
-                }, {
-                    threshold: [0, 0.25, 0.5, 0.75, 1],
-                    // Multiple thresholds for smoother transitions
-                    rootMargin: '-10% 0px -10% 0px',
-                }
-            );
-
-            allSections.forEach((section) => sectionObserver.observe(section));
-
-            /**
-             * Observer for sticky headers — adds a subtle shadow when
-             * the header is actually "stuck" (not at its natural position).
-             * We detect this by observing a sentinel element just above each header.
-             * Simpler approach: use a second observer on each header itself.
-             */
-            const headerObserver = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        // If the header is NOT fully intersecting (i.e., it's stuck
-                        // because the user scrolled past its natural position),
-                        // we add the shadow class.
-                        const header = entry.target;
-                        if (entry.intersectionRatio < 1) {
-                            header.classList.add('is-stuck');
-                        } else {
-                            header.classList.remove('is-stuck');
-                        }
-                    });
-                }, {
-                    threshold: [1],
-                    // 1.0 means "fully visible within its container"
-                    rootMargin: '0px 0px 0px 0px',
-                }
-            );
-
-            sectionHeaders.forEach((header) => headerObserver.observe(header));
-
-            // ========================================================
-            // 3. SMOOTH SCROLL FOR NAV CLICKS (with offset for sticky header)
-            //    Note: CSS `scroll-behavior: smooth` handles most of this,
-            //    but we add a tiny offset so the sticky header doesn't cover
-            //    the very top of the section content.
-            // ========================================================
-            navLinks.forEach((link) => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const sectionId = this.getAttribute('data-section');
-                    const targetSection = document.getElementById(sectionId);
-                    if (!targetSection) return;
-
-                    // Get the sticky header height so we can offset
-                    const headerEl = targetSection.querySelector('.section__header');
-                    const headerHeight = headerEl ? headerEl.offsetHeight : 0;
-
-                    const targetPosition =
-                        targetSection.getBoundingClientRect().top +
-                        window.pageYOffset -
-                        headerHeight -
-                        4; // 4px breathing room
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth',
-                    });
-                });
-            });
-
-            // ========================================================
-            // 4. TOUCH / SWIPE SUPPORT FOR CAROUSEL (mobile-friendly)
-            // ========================================================
-            let touchStartX = 0;
-            let touchEndX = 0;
-            const SWIPE_THRESHOLD = 50; // px
-
-            carouselEl.addEventListener('touchstart', function (e) {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            carouselEl.addEventListener('touchend', function (e) {
-                touchEndX = e.changedTouches[0].screenX;
-                const diff = touchStartX - touchEndX;
-                if (Math.abs(diff) > SWIPE_THRESHOLD) {
-                    if (diff > 0) {
-                        // Swiped left → go to next
-                        nextSlide();
-                    } else {
-                        // Swiped right → go to previous
-                        prevSlide();
-                    }
-                }
-            }, { passive: true });
-
-            console.log(
-                '%c🚀 Resume website initialized successfully! %cAll systems go.',
-                'font-weight:bold;color:#ffb347;',
-                'color:#aaa;'
-            );
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
