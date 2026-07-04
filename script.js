@@ -23,9 +23,9 @@
     ];
 
     const carouselImages = [
-        'images/about1.jpg',
-        'images/about2.jpg',
-        'images/about3.jpg',
+        'images/image1.jpg',
+        'images/image2.jpg',
+        'images/image3.jpg',
     ];
 
     const autoplayInterval = 4000; // ms
