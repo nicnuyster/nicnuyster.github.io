@@ -12,7 +12,7 @@
     --color-0-rgb: 91, 76, 196;
     --color-1: #2EAF7D;
     --color-1-rgb: 46, 175, 125;
-    --color-2: #E8624F;
+    --color-2: #e8624f;
     --color-2-rgb: 232, 98, 79;
     --color-3: #3B82C4;
     --color-3-rgb: 59, 130, 196;
@@ -21,6 +21,10 @@
     --nav-dot-size: 16px;
     --nav-dot-size-mobile: 12px;
     --transition-speed: 0.35s;
+
+    /* мой штуки */
+    --color-5: #FFFFFF;
+    --color-5-rgb: 255, 255, 255;
 }
 
 html {

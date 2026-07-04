@@ -10,6 +10,8 @@
         '#E8624F', // Commerce – warm coral
         '#3B82C4', // GitHub Projects – ocean blue
         '#C94057', // Contact Info – crimson rose
+
+        '#FFFFFF', // white
     ];
 
     const sectionRGB = [
