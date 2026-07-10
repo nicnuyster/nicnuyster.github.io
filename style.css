@@ -326,20 +326,6 @@ body {
     flex-direction: column;
 }
 
-.project-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.05rem;
-    font-weight: 500;
-    word-break: break-word;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
-}
-
-.project-link:hover {
-    text-decoration: underline;
-    color: #ffeaa7;
-}
-
 /* === CONTACT === */
 .contact-intro {
     text-align: center;
