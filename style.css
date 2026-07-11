@@ -314,6 +314,20 @@ body {
     font-style: italic;
 }
 
+.bubble-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 500;
+    word-break: break-word;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.bubble-link:hover {
+    text-decoration: underline;
+    color: #ffeaa7;
+}
+
 /* === PROJECTS GRID === */
 .projects-grid {
     display: grid;
