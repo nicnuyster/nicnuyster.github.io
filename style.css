@@ -405,13 +405,16 @@ body {
 }
 
 status--completed {
-color: #2EAF7D;
+    background: #2EAF7D;
+    color: #2EAF7D;
 }
 status--on-hold{
-color: #e7d42a;
+    background: #e7d42a;
+    color: #e7d42a;
 }
 status--in-progress{
-color: #3fc1ca;
+    background: #3fc1ca;
+    color: #3fc1ca;
 }
 
 
