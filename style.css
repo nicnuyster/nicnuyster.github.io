@@ -399,22 +399,22 @@ body {
     font-size: 0.78rem;
     font-weight: 500;
     padding: 5px 14px;
-    border-radius: 20px;
+    border-radius: 50px;
     letter-spacing: 0.4px;
     text-transform: uppercase;
 }
 
-status--completed {
+.status--completed {
     background: #2EAF7D;
-    color: #2EAF7D;
+    color: #f0f0f0;
 }
-status--on-hold{
+.status--on-hold{
     background: #e7d42a;
-    color: #e7d42a;
+    color: #f0f0f0;
 }
-status--in-progress{
+.status--in-progress{
     background: #3fc1ca;
-    color: #3fc1ca;
+    color: #f0f0f0;
 }
 
 
