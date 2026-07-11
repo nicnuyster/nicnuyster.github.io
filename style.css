@@ -377,6 +377,7 @@ body {
     min-width: 0;
 }
 
+/* === additional links === */
 .contact-link {
     color: #fff;
     text-decoration: none;
@@ -390,6 +391,29 @@ body {
     text-decoration: underline;
     color: #ffeaa7;
 }
+
+/* === project tags === */
+.project-bubble__status {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+status--completed {
+color: #2EAF7D;
+}
+status--on-hold{
+color: #e7d42a;
+}
+status--in-progress{
+color: #3fc1ca;
+}
+
 
 /* === RESPONSIVE === */
 @media (max-width: 900px) {
