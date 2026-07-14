@@ -70,7 +70,7 @@ body {
     justify-content: center;
     position: relative;
     z-index: 1;
-    padding: 60px 40px 40px;
+    padding: 60px 40px 120px;
     /* Background set via JS with rgba for transparency */
     background-color: rgba(91, 76, 196, 0.88);
 }
