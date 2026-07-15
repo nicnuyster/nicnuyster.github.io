@@ -21,10 +21,6 @@
     --nav-dot-size: 16px;
     --nav-dot-size-mobile: 12px;
     --transition-speed: 0.35s;
-
-    /* мой штуки */
-    --color-5: #FFFFFF;
-    --color-5-rgb: 255, 255, 255;
 }
 
 html {
