@@ -272,7 +272,8 @@
             if (!contentEl) return;
             const ratio = entry.intersectionRatio;
             // Smooth mapping: use ratio directly with a slight ease
-            const opacity = Math.min(1, Math.max(0, ratio * 1.1));
+            //const opacity = Math.min(1, Math.max(0, ratio * 1.1));
+            const opacity = 1;
             contentEl.style.opacity = opacity;
         });
     }, fadeObserverOptions);
