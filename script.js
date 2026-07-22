@@ -1,196 +1,161 @@
-(function () {
-  "use strict";
+(() => {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const navDotsContainer = document.getElementById("navDots");
-  const navDots = navDotsContainer ? Array.from(navDotsContainer.querySelectorAll(".nav-dot")) : [];
+  const sections = [...document.querySelectorAll(".snap-section")];
+  const navButtons = [...document.querySelectorAll(".nav-dot")];
 
-  const sections = Array.from(document.querySelectorAll(".snap-section"));
-  const carouselSlides = document.getElementById("carouselSlides");
-  const carouselPrev = document.getElementById("carouselPrev");
-  const carouselNext = document.getElementById("carouselNext");
-  const carouselIndicators = document.getElementById("carouselIndicators");
-  const carouselContainer = document.getElementById("carousel");
+  const setActiveNavigation = (index) => {
+    navButtons.forEach((button) => {
+      const isActive = Number(button.dataset.index) === index;
 
-  const carouselDots = carouselIndicators ? Array.from(carouselIndicators.querySelectorAll(".carousel-dot")) : [];
+      button.classList.toggle("active", isActive);
 
-  const autoplayInterval = 4000;
+      if (isActive) {
+        button.setAttribute("aria-current", "page");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+  };
 
-  let currentSlide = 0;
-  let autoplayTimer = null;
-  let touchStartX = 0;
+  navButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.index);
+      const targetSection = sections[index];
 
-  function getSlides() {
-    return carouselSlides ? Array.from(carouselSlides.querySelectorAll(".carousel-slide")) : [];
+      if (!targetSection) {
+        return;
+      }
+
+      targetSection.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+
+      setActiveNavigation(index);
+    });
+  });
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleSections.length > 0) {
+          setActiveNavigation(Number(visibleSections[0].target.dataset.index));
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-30% 0px -45% 0px",
+        threshold: [0.05, 0.25, 0.5],
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
   }
 
-  function goToSlide(index) {
-    const slides = getSlides();
-    const total = slides.length;
+  const carousel = document.querySelector("#carousel");
+  const slides = [...document.querySelectorAll(".carousel-slide")];
+  const dots = [...document.querySelectorAll(".carousel-dot")];
+  const previousButton = document.querySelector("#carouselPrev");
+  const nextButton = document.querySelector("#carouselNext");
 
-    if (!total) {
+  if (!carousel || slides.length === 0 || !previousButton || !nextButton) {
+    return;
+  }
+
+  let activeSlide = 0;
+  let autoplayId = null;
+
+  const renderSlide = (nextIndex) => {
+    activeSlide = (nextIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, index) => {
+      const isActive = index === activeSlide;
+      slide.classList.toggle("active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === activeSlide;
+      dot.classList.toggle("active", isActive);
+
+      if (isActive) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayId !== null) {
+      window.clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  };
+
+  const startAutoplay = () => {
+    if (reduceMotion || slides.length < 2) {
       return;
     }
-
-    currentSlide = (index + total) % total;
-
-    slides.forEach((slide, slideIndex) => {
-      slide.classList.toggle("active", slideIndex === currentSlide);
-    });
-
-    carouselDots.forEach((dot, dotIndex) => {
-      dot.classList.toggle("active", dotIndex === currentSlide);
-    });
-  }
-
-  function nextSlide() {
-    goToSlide(currentSlide + 1);
-  }
-
-  function previousSlide() {
-    goToSlide(currentSlide - 1);
-  }
-
-  function stopAutoplay() {
-    if (autoplayTimer) {
-      window.clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    }
-  }
-
-  function startAutoplay() {
-    const slides = getSlides();
 
     stopAutoplay();
 
-    if (slides.length > 1) {
-      autoplayTimer = window.setInterval(nextSlide, autoplayInterval);
-    }
-  }
+    autoplayId = window.setInterval(() => {
+      renderSlide(activeSlide + 1);
+    }, 6500);
+  };
 
-  function restartAutoplay() {
+  previousButton.addEventListener("click", () => {
+    renderSlide(activeSlide - 1);
     startAutoplay();
-  }
+  });
 
-  function activateNavigation(index) {
-    navDots.forEach((dot, dotIndex) => {
-      dot.classList.toggle("active", dotIndex === index);
-    });
-  }
+  nextButton.addEventListener("click", () => {
+    renderSlide(activeSlide + 1);
+    startAutoplay();
+  });
 
-  navDots.forEach((dot) => {
+  dots.forEach((dot) => {
     dot.addEventListener("click", () => {
-      const index = Number(dot.dataset.index);
-      const target = document.getElementById(`section-${index}`);
-
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
+      renderSlide(Number(dot.dataset.slide));
+      startAutoplay();
     });
   });
 
-  if (carouselPrev) {
-    carouselPrev.addEventListener("click", () => {
-      previousSlide();
-      restartAutoplay();
-    });
-  }
-
-  if (carouselNext) {
-    carouselNext.addEventListener("click", () => {
-      nextSlide();
-      restartAutoplay();
-    });
-  }
-
-  carouselDots.forEach((dot) => {
-    dot.addEventListener("click", () => {
-      goToSlide(Number(dot.dataset.slide));
-      restartAutoplay();
-    });
+  carousel.addEventListener("mouseenter", stopAutoplay);
+  carousel.addEventListener("mouseleave", startAutoplay);
+  carousel.addEventListener("focusin", stopAutoplay);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) {
+      startAutoplay();
+    }
   });
 
-  if (carouselContainer) {
-    carouselContainer.addEventListener("mouseenter", stopAutoplay);
-    carouselContainer.addEventListener("mouseleave", startAutoplay);
-    carouselContainer.addEventListener("focusin", stopAutoplay);
-    carouselContainer.addEventListener("focusout", startAutoplay);
-
-    carouselContainer.addEventListener(
-      "touchstart",
-      (event) => {
-        touchStartX = event.changedTouches[0].screenX;
-        stopAutoplay();
-      },
-      { passive: true },
-    );
-
-    carouselContainer.addEventListener(
-      "touchend",
-      (event) => {
-        const touchEndX = event.changedTouches[0].screenX;
-        const difference = touchEndX - touchStartX;
-
-        if (Math.abs(difference) > 40) {
-          if (difference > 0) {
-            previousSlide();
-          } else {
-            nextSlide();
-          }
-        }
-
-        startAutoplay();
-      },
-      { passive: true },
-    );
-  }
-
-  document.addEventListener("keydown", (event) => {
-    if (!carouselContainer) {
-      return;
-    }
-
-    const carouselRect = carouselContainer.getBoundingClientRect();
-    const carouselVisible = carouselRect.top < window.innerHeight && carouselRect.bottom > 0;
-
-    if (!carouselVisible) {
-      return;
-    }
-
+  carousel.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
-      previousSlide();
-      restartAutoplay();
+      renderSlide(activeSlide - 1);
+      startAutoplay();
     }
 
     if (event.key === "ArrowRight") {
       event.preventDefault();
-      nextSlide();
-      restartAutoplay();
+      renderSlide(activeSlide + 1);
+      startAutoplay();
     }
   });
 
-  if ("IntersectionObserver" in window) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting).sort((first, second) => second.intersectionRatio - first.intersectionRatio);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  });
 
-        if (visibleEntries.length) {
-          activateNavigation(Number(visibleEntries[0].target.dataset.index));
-        }
-      },
-      {
-        threshold: [0.2, 0.4, 0.6],
-        rootMargin: "-25% 0px -45% 0px",
-      },
-    );
-
-    sections.forEach((section) => sectionObserver.observe(section));
-  }
-
-  goToSlide(0);
-  activateNavigation(0);
+  renderSlide(0);
   startAutoplay();
 })();
