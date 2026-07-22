@@ -129,7 +129,7 @@ body {
 .carousel-wrapper {
     flex: 1 1 45%;
     min-width: 280px;
-    max-width: 500px;
+    max-width: 500px; 
 }
 
 .carousel-container {
@@ -158,6 +158,24 @@ body {
     opacity: 0;
     transition: opacity 0.55s ease;
     pointer-events: none;
+}
+
+.carousel-slide:nth-child(1)
+{
+    object-position: 50% 0%; /* Move view upward */
+    transform: scale(1);    /* Zoom 20% */
+}
+
+.carousel-slide:nth-child(2)
+{
+    object-position: 50% 50%; /* Show more of the left */
+    transform: scale(1);
+}
+
+.carousel-slide:nth-child(3)
+{
+    object-position: 50% 25%; /* Move view upward */
+    transform: scale(2);
 }
 
 .carousel-slide.active {
