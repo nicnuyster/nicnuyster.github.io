@@ -1,434 +1,1151 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Резюме разработчика программного обеспечения Александра Ширмера." />
-    <title>CV - Shirmer</title>
-
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>CV — Shirmer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
   </head>
-
   <body>
-    <header class="site-header">
-      <a class="site-mark" href="#section-0" aria-label="Перейти к разделу О себе">AS</a>
+    <!-- Canvas фон -->
+    <canvas id="bgCanvas"></canvas>
 
-      <nav class="site-nav" id="navDots" aria-label="Навигация по разделам">
-        <button class="nav-dot active" data-index="0" type="button" aria-current="page">О себе</button>
-        <button class="nav-dot" data-index="1" type="button">Академический опыт</button>
-        <button class="nav-dot" data-index="2" type="button">Коммерческий опыт</button>
-        <button class="nav-dot" data-index="3" type="button">GitHub проекты</button>
-        <button class="nav-dot" data-index="4" type="button">Мои контакты</button>
-      </nav>
-    </header>
+    <!-- Индикатор прогресса скролла (верх) -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Мобильный индикатор прогресса (низ) -->
+    <div class="mobile-progress" id="mobileProgress"></div>
+
+    <!-- Навигация -->
+    <nav class="nav-dots" id="navDots" aria-label="Section navigation">
+      <span class="nav-dot active" data-index="0" data-tooltip="About Me"></span>
+      <span class="nav-dot" data-index="1" data-tooltip="Academic"></span>
+      <span class="nav-dot" data-index="2" data-tooltip="Commerce"></span>
+      <span class="nav-dot" data-index="3" data-tooltip="GitHub Projects"></span>
+      <span class="nav-dot" data-index="4" data-tooltip="Contact Info"></span>
+    </nav>
 
     <main class="scroll-container" id="scrollContainer">
-      <section class="snap-section about-section" id="section-0" data-index="0">
-        <div class="section-content">
-          <div class="section-head about-head">
-            <div class="about-heading">
-              <p class="eyebrow">CV - Shirmer</p>
-              <h1>Разработчик программного обеспечения</h1>
-            </div>
-
-            <span class="project-bubble__status status--completed">Активно ищу работу</span>
-          </div>
-
-          <div class="about-dashboard">
-            <div class="hero-media-panel">
-              <div class="carousel-container" id="carousel" tabindex="0" aria-label="Фотографии">
+      <!-- Section 0: About Me -->
+      <section class="section" id="section-0" data-index="0">
+        <div class="about-container">
+          <div class="about-layout">
+            <div class="carousel-wrapper">
+              <div class="carousel-container glass" id="carousel" role="region" aria-label="Photo carousel">
                 <div class="carousel-slides" id="carouselSlides">
-                  <img
-                    src="images/image1.jpg"
-                    alt="Фотография Александра Ширмера"
-                    class="carousel-slide active"
-                    width="1200"
-                    height="900"
-                    fetchpriority="high"
-                    decoding="async"
-                  />
-                  <img
-                    src="images/image2.jpg"
-                    alt="Фотография Александра Ширмера"
-                    class="carousel-slide"
-                    width="1200"
-                    height="900"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <img
-                    src="images/image3.jpg"
-                    alt="Фотография Александра Ширмера"
-                    class="carousel-slide"
-                    width="1200"
-                    height="900"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <div class="carousel-slide active" data-index="0">
+                    <img src="images/image1.jpg" alt="About photo 1" loading="lazy" />
+                    <div class="carousel-placeholder">
+                      <span class="carousel-placeholder-text">AS</span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide" data-index="1">
+                    <img src="images/image2.jpg" alt="About photo 2" loading="lazy" />
+                    <div class="carousel-placeholder">
+                      <span class="carousel-placeholder-text">AS</span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide" data-index="2">
+                    <img src="images/image3.jpg" alt="About photo 3" loading="lazy" />
+                    <div class="carousel-placeholder">
+                      <span class="carousel-placeholder-text">AS</span>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="media-shade" aria-hidden="true"></div>
-
-                <button class="carousel-btn carousel-prev" id="carouselPrev" type="button" aria-label="Предыдущее изображение">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m15 18-6-6 6-6"></path>
+                <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous image">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="15 18 9 12 15 6"></polyline>
                   </svg>
                 </button>
-
-                <button class="carousel-btn carousel-next" id="carouselNext" type="button" aria-label="Следующее изображение">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m9 18 6-6-6-6"></path>
+                <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next image">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
                   </svg>
                 </button>
-
-                <div class="carousel-indicators" id="carouselIndicators">
-                  <button class="carousel-dot active" type="button" data-slide="0" aria-label="Изображение 1" aria-current="true"></button>
-                  <button class="carousel-dot" type="button" data-slide="1" aria-label="Изображение 2"></button>
-                  <button class="carousel-dot" type="button" data-slide="2" aria-label="Изображение 3"></button>
+                <div class="carousel-indicators" id="carouselIndicators" role="tablist" aria-label="Slide indicators">
+                  <button class="carousel-dot active" data-slide="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+                  <button class="carousel-dot" data-slide="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+                  <button class="carousel-dot" data-slide="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
                 </div>
               </div>
             </div>
-
-            <div class="about-copy-panel">
-              <p>
-                Разработчик программного обеспечения с опытом решения задач на разных уровнях программного стека — от разработки встроенного ПО и взаимодействия
-                с аппаратным обеспечением до создания серверных приложений и сервисов.
-              </p>
-            </div>
-
-            <div class="about-copy-panel about-copy-panel--wide">
-              <p>
-                За время работы занимался программированием микроконтроллеров, разработкой высокоуровневых драйверов для физических устройств, реализацией
-                бизнес-логики и REST API в микросервисной архитектуре, разработкой пользовательской логики UI, а также обучением и интеграцией моделей машинного
-                обучения.
-              </p>
-            </div>
-
-            <div class="about-copy-panel about-copy-panel--accent">
-              <p>
-                Опыт работы в различных направлениях позволил сформировать системный подход к разработке, понимание полного жизненного цикла программного
-                обеспечения и умение быстро осваивать новые технологии. Наиболее интересны задачи, связанные с разработкой серверных приложений, архитектурой
-                программных систем и созданием надежных, масштабируемых решений, при этом открыт к позициям разработчика программного обеспечения с более
-                широким кругом задач.
-              </p>
+            <div class="about-text">
+              <div class="status-badge animate-fade-in-up delay-200">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>Активно ищу работу</span>
+              </div>
+              <h2 class="about-title animate-fade-in-up delay-0">О себе</h2>
+              <div class="about-paragraphs">
+                <p class="animate-fade-in-up delay-100">
+                  Разработчик программного обеспечения с опытом решения задач на разных уровнях программного стека — от разработки встроенного ПО и
+                  взаимодействия с аппаратным обеспечением до создания серверных приложений и сервисов.
+                </p>
+                <p class="animate-fade-in-up delay-100">
+                  За время работы занимался программированием микроконтроллеров, разработкой высокоуровневых драйверов для физических устройств, реализацией
+                  бизнес-логики и REST API в микросервисной архитектуре, разработкой пользовательской логики UI, а также обучением и интеграцией моделей
+                  машинного обучения.
+                </p>
+                <p class="animate-fade-in-up delay-100">
+                  Опыт работы в различных направлениях позволил сформировать системный подход к разработке, понимание полного жизненного цикла программного
+                  обеспечения и умение быстро осваивать новые технологии. Наиболее интересны задачи, связанные с разработкой серверных приложений, архитектурой
+                  программных систем и созданием надежных, масштабируемых решений, при этом открыт к позициям разработчика программного обеспечения с более
+                  широким кругом задач.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="snap-section academic-section" id="section-1" data-index="1">
-        <div class="section-content">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">01 / Академический опыт</p>
-              <h2>Академический опыт</h2>
-            </div>
+      <!-- Section 1: Academic -->
+      <section class="section" id="section-1" data-index="1">
+        <div class="container">
+          <div class="section-header">
+            <h2>Академический опыт</h2>
+            <div class="section-header-line"></div>
+            <p class="text-secondary">Образование и научная деятельность</p>
           </div>
+          <div class="timeline">
+            <div class="timeline-line"></div>
 
-          <div class="experience-grid academic-grid">
-            <article class="dashboard-card">
-              <span class="card-index">01</span>
-              <h3>Тверской государственный университет</h3>
-              <p class="card-type">Бакалавр 2019 - 2023</p>
-              <p class="card-text">"Математика и компьютерные науки"</p>
+            <article class="timeline-item timeline-item--left animate-fade-in-up delay-100">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card glass">
+                <div class="timeline-arrow"></div>
+                <h3 class="timeline-title">Тверской государственный университет</h3>
+                <p class="timeline-subtitle">Бакалавр</p>
+                <div class="timeline-date">
+                  <svg
+                    class="timeline-date-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                  <span>2019 – 2023</span>
+                </div>
+                <p class="timeline-desc">«Математика и компьютерные науки»</p>
+              </div>
             </article>
 
-            <article class="dashboard-card">
-              <span class="card-index">02</span>
-              <h3>Тверской государственный университет</h3>
-              <p class="card-type">Магистр 2023 - 2025</p>
-              <p class="card-text">"Математическое и компьютерное моделирование"</p>
+            <article class="timeline-item timeline-item--right animate-fade-in-up delay-200">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card glass">
+                <div class="timeline-arrow"></div>
+                <h3 class="timeline-title">Тверской государственный университет</h3>
+                <p class="timeline-subtitle">Магистр</p>
+                <div class="timeline-date">
+                  <svg
+                    class="timeline-date-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                  <span>2023 – 2025</span>
+                </div>
+                <p class="timeline-desc">«Математическое и компьютерное моделирование»</p>
+              </div>
             </article>
 
-            <article class="dashboard-card dashboard-card--feature">
-              <span class="card-index">03</span>
-              <h3>Тверской государственный университет</h3>
-              <p class="card-type">Магистерская диссертация</p>
-              <p class="card-text">
-                Ширмер А.А. (2025) Объяснимые модели искусственного интеллекта для задач анализа мелких лабораторных животных в поведенческих тестах
-              </p>
+            <article class="timeline-item timeline-item--left animate-fade-in-up delay-300">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card glass">
+                <div class="timeline-arrow"></div>
+                <h3 class="timeline-title">Тверской государственный университет</h3>
+                <p class="timeline-subtitle">Магистерская диссертация</p>
+                <div class="timeline-date">
+                  <svg
+                    class="timeline-date-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                  <span>2025</span>
+                </div>
+                <p class="timeline-desc">
+                  Ширмер А.А. Объяснимые модели искусственного интеллекта для задач анализа мелких лабораторных животных в поведенческих тестах
+                </p>
+              </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="snap-section commerce-section" id="section-2" data-index="2">
-        <div class="section-content">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">02 / Коммерческий опыт</p>
-              <h2>Коммерческий опыт</h2>
-            </div>
+      <!-- Section 2: Commerce -->
+      <section class="section" id="section-2" data-index="2">
+        <div class="container">
+          <div class="section-header">
+            <h2>Коммерческий опыт</h2>
+            <div class="section-header-line"></div>
+            <p class="text-secondary">Работа в индустрии и самозанятость</p>
           </div>
+          <div class="timeline">
+            <div class="timeline-line"></div>
 
-          <div class="experience-grid commerce-grid">
-            <article class="dashboard-card commerce-card">
-              <span class="card-index">01</span>
-              <h3>ООО "Нефтегазгеофизика"</h3>
-              <p class="card-type">Инженер-разработчик</p>
-              <p class="card-period">начало 2024 - конец 2025</p>
-              <p class="card-text">
-                В рамках трудоустройства, имел следующие обязанности: Поддержка и обновление legacy систем. Разработка новых систем в соответствии с параметрами
-                заказчиков.
-              </p>
-              <p class="card-text">Основной стек - C#, C++, Qt framework, Winforms, .NET. Вспомогательный стек - Python.</p>
+            <article class="timeline-item timeline-item--left animate-fade-in-up delay-100">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card glass">
+                <div class="timeline-arrow"></div>
+                <h3 class="timeline-title">ООО «Нефтегазгеофизика»</h3>
+                <p class="timeline-subtitle">Инженер-разработчик</p>
+                <div class="timeline-date">
+                  <svg
+                    class="timeline-date-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                  <span>2024 – 2025</span>
+                </div>
+                <p class="timeline-desc">Поддержка и обновление legacy-систем. Разработка новых систем в соответствии с требованиями заказчиков.</p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">C#</span>
+                  <span class="timeline-tag">C++</span>
+                  <span class="timeline-tag">QT</span>
+                  <span class="timeline-tag">WinForms</span>
+                  <span class="timeline-tag">.NET</span>
+                  <span class="timeline-tag">Python</span>
+                </div>
+              </div>
             </article>
 
-            <article class="dashboard-card commerce-card commerce-card--accent">
-              <span class="card-index">02</span>
-              <h3>Самозанятый</h3>
-              <p class="card-type">Самозанятый</p>
-              <p class="card-period">конец 2025 - по настоящее время</p>
-              <p class="card-text">
-                В рамках занятости, повышал soft и hard навыки следующим образом: прохождение курса от Гарварда CS50, реализация структуры и программного кода
-                пет-проектов. Изучение существующих высоконагруженных систем распределения товаров (Ozon склад).
-              </p>
+            <article class="timeline-item timeline-item--right animate-fade-in-up delay-200">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card glass">
+                <div class="timeline-arrow"></div>
+                <h3 class="timeline-title">Самозанятый</h3>
+                <p class="timeline-subtitle">Самозанятый</p>
+                <div class="timeline-date">
+                  <svg
+                    class="timeline-date-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                  <span>2025 – наст. время</span>
+                </div>
+                <p class="timeline-desc">
+                  Прохождение курса CS50 от Harvard. Реализация пет-проектов. Изучение высоконагруженных систем распределения товаров (Ozon склад).
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">CS50</span>
+                  <span class="timeline-tag">Go</span>
+                  <span class="timeline-tag">Python</span>
+                  <span class="timeline-tag">System Design</span>
+                </div>
+              </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="snap-section projects-section" id="section-3" data-index="3">
-        <div class="section-content">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">03 / GitHub проекты</p>
-              <h2>GitHub проекты</h2>
-            </div>
+      <!-- Section 3: GitHub -->
+      <section class="section" id="section-3" data-index="3">
+        <div class="container">
+          <div class="projects-header">
+            <h2>GitHub проекты</h2>
+            <p class="projects-subtitle">Пет-проекты и тестовые задания</p>
           </div>
 
-          <div class="projects-grid">
-            <article class="dashboard-card project-card">
-              <span class="card-index">01</span>
-              <a href="https://github.com/nicnuyster/TwoSumm" class="project-link" target="_blank" rel="noopener noreferrer">
+          <div class="projects-grid" id="projectsGrid">
+            <article class="project-card animate-fade-in-up" data-category="algorithms" style="animation-delay: 0s">
+              <a href="https://github.com/nicnuyster/TwoSumm" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="TwoSumm на GitHub">
                 TwoSumm
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Алгоритмы <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Raw Python</p>
-              <p class="card-text">Решение Leetcode проблемы "Две суммы". Проект нацелен на развитие практических навыков.</p>
-            </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">02</span>
-              <a href="https://github.com/nicnuyster/plindrom" class="project-link" target="_blank" rel="noopener noreferrer">
-                polindrom
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+              <div class="project-meta">
+                <span class="project-category">Алгоритмы</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Raw Python</p>
+              <p class="project-desc">Решение LeetCode проблемы «Two Sum». Проект нацелен на развитие практических навыков.</p>
+              <a
+                href="https://github.com/nicnuyster/TwoSumm"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть TwoSumm на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
               </a>
-              <p class="card-type">Алгоритмы <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Raw Python</p>
-              <p class="card-text">Решение Leetcode проблемы "Полиндром". Проект нацелен на развитие практических навыков.</p>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">03</span>
-              <a href="https://github.com/nicnuyster/sortings" class="project-link" target="_blank" rel="noopener noreferrer">
-                sortings
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+            <article class="project-card animate-fade-in-up" data-category="algorithms" style="animation-delay: 0.08s">
+              <a href="https://github.com/nicnuyster/plindrom" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="Polindrom на GitHub">
+                Polindrom
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Алгоритмы <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Raw Python</p>
-              <p class="card-text">Реализация логики алгоритмов сортировки. Проект нацелен на развитие практических навыков.</p>
+              <div class="project-meta">
+                <span class="project-category">Алгоритмы</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Raw Python</p>
+              <p class="project-desc">Решение LeetCode проблемы «Palindrome». Проект нацелен на развитие практических навыков.</p>
+              <a
+                href="https://github.com/nicnuyster/plindrom"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Polindrom на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">04</span>
-              <a href="https://github.com/nicnuyster/Python_inrange_GO" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="algorithms" style="animation-delay: 0.16s">
+              <a href="https://github.com/nicnuyster/sortings" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="Sortings на GitHub">
+                Sortings
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+              <div class="project-meta">
+                <span class="project-category">Алгоритмы</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Raw Python</p>
+              <p class="project-desc">Реализация алгоритмов сортировки. Проект нацелен на развитие практических навыков.</p>
+              <a
+                href="https://github.com/nicnuyster/sortings"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Sortings на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
+            </article>
+            <article class="project-card animate-fade-in-up" data-category="algorithms" style="animation-delay: 0.24s">
+              <a
+                href="https://github.com/nicnuyster/Python_inrange_GO"
+                class="project-name"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Python_inrange_go на GitHub"
+              >
                 Python_inrange_go
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Алгоритмы <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Raw Python</p>
-              <p class="card-text">Реализация встроенной функции range из Python, в Golang. Проект нацелен на развитие практических навыков.</p>
+              <div class="project-meta">
+                <span class="project-category">Алгоритмы</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Go</p>
+              <p class="project-desc">Реализация функции range из Python на Go. Проект нацелен на развитие практических навыков.</p>
+              <a
+                href="https://github.com/nicnuyster/Python_inrange_GO"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Python_inrange_go на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">05</span>
-              <a href="https://github.com/nicnuyster/nicnuyster.github.io" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="frontend" style="animation-delay: 0.32s">
+              <a
+                href="https://github.com/nicnuyster/nicnuyster.github.io"
+                class="project-name"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="nicnuyster.github.io на GitHub"
+              >
                 nicnuyster.github.io
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Frontend <span class="project-bubble__status status--completed">Завершено*</span></p>
-              <p class="project-tech">HTML, CSS, JavaScript, GitHub Pages</p>
-              <p class="card-text">Реализация данной frontend страницы. Проект нацелен на практическое применение и исследование возможностей GitHub Pages.</p>
+              <div class="project-meta">
+                <span class="project-category">Frontend</span>
+                <span class="project-status status--completed">Завершено*</span>
+              </div>
+              <p class="project-stack">HTML, CSS, JS, GitHub Pages</p>
+              <p class="project-desc">Реализация данного CV-сайта. Практическое применение навыков frontend-разработки.</p>
+              <a
+                href="https://github.com/nicnuyster/nicnuyster.github.io"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть nicnuyster.github.io на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">06</span>
-              <a href="https://github.com/nicnuyster/Yandex_map_api" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="backend" style="animation-delay: 0.4s">
+              <a
+                href="https://github.com/nicnuyster/Yandex_map_api"
+                class="project-name"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Yandex_map_api на GitHub"
+              >
                 Yandex_map_api
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Backend <span class="project-bubble__status status--in-progress">В процессе*</span></p>
-              <p class="project-tech">Python, FastAPI, SQLite, YandexMapsAPI, Docker</p>
-              <p class="card-text">
-                Микросервис преобразующий названия мест в координаты (и наоборот). Проект нацелен на работу не только с RestAPI (отправить/принять запрос), но и
-                с БД, кэшированием, Docker, отображением самих мест на frontend. В данный момент некоторые части реализованы не полностью, но в конечной
-                реализации проект должен представлять из себя реализацию нескольких микросервисов.
-              </p>
-            </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">07</span>
-              <a href="https://github.com/nicnuyster/test-task-for-junior-backend-developer" class="project-link" target="_blank" rel="noopener noreferrer">
-                test-task-for-junior-backend-developer
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+              <div class="project-meta">
+                <span class="project-category">Backend</span>
+                <span class="project-status status--in-progress">В процессе</span>
+              </div>
+              <p class="project-stack">Python, FastAPI, SQLite, Docker</p>
+              <p class="project-desc">Микросервис преобразования названий мест в координаты и обратно. Работа с БД, кешированием, Docker.</p>
+              <a
+                href="https://github.com/nicnuyster/Yandex_map_api"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Yandex_map_api на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
               </a>
-              <p class="card-type">Backend <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Golang, Swagger, Docker, PostgreSQL</p>
-              <p class="card-text">Тестовое задание на роль "Backend разработчик" от "MEDODS".</p>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">08</span>
-              <a href="https://github.com/nicnuyster/Effective_Mobile_Junior_GO" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="backend" style="animation-delay: 0.48s">
+              <a
+                href="https://github.com/nicnuyster/test-task-for-junior-backend-developer"
+                class="project-name"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="test-task-for-junior на GitHub"
+              >
+                test-task-for-junior
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+              <div class="project-meta">
+                <span class="project-category">Backend</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Go, Swagger, Docker, PostgreSQL</p>
+              <p class="project-desc">Тестовое задание на роль Backend-разработчика от MEDODS.</p>
+              <a
+                href="https://github.com/nicnuyster/test-task-for-junior-backend-developer"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть test-task-for-junior на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
+            </article>
+            <article class="project-card animate-fade-in-up" data-category="backend" style="animation-delay: 0.56s">
+              <a
+                href="https://github.com/nicnuyster/Effective_Mobile_Junior_GO"
+                class="project-name"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Effective_Mobile_Junior_GO на GitHub"
+              >
                 Effective_Mobile_Junior_GO
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Backend <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Golang, Swagger, Docker, PostgreSQL</p>
-              <p class="card-text">Тестовое задание на роль "Backend разработчик" от "Effective Mobile".</p>
+              <div class="project-meta">
+                <span class="project-category">Backend</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Go, Swagger, Docker, PostgreSQL</p>
+              <p class="project-desc">Тестовое задание на роль Backend-разработчика от Effective Mobile.</p>
+              <a
+                href="https://github.com/nicnuyster/Effective_Mobile_Junior_GO"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Effective_Mobile_Junior_GO на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">09</span>
-              <a href="https://github.com/nicnuyster/MNISTCNN" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="nn-xai" style="animation-delay: 0.64s">
+              <a href="https://github.com/nicnuyster/MNISTCNN" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="MNISTCNN на GitHub">
                 MNISTCNN
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">NN/XAI <span class="project-bubble__status status--on-hold">На удержании</span></p>
-              <p class="project-tech">Python, Torch, Numpy, Matplotlib, Torchvision</p>
-              <p class="card-text">
-                Магистерская диссертация на тему "Объяснимые модели искусственного интеллекта для задач анализа мелких лабораторных животных в поведенческих
-                тестах". Работу можно прочитать, PDF хранится в репозитории. Релиз кода пока на удержании, из-за необходимости переработки некоторых
-                компонентов.
-              </p>
-            </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">10</span>
-              <a href="https://github.com/nicnuyster/webpet" class="project-link" target="_blank" rel="noopener noreferrer">
-                webpet
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+              <div class="project-meta">
+                <span class="project-category">NN / XAI</span>
+                <span class="project-status status--on-hold">На удержании</span>
+              </div>
+              <p class="project-stack">Python, PyTorch, NumPy, Matplotlib</p>
+              <p class="project-desc">Магистерская диссертация по объяснимым моделям ИИ. Код на удержании из-за переработки компонентов.</p>
+              <a
+                href="https://github.com/nicnuyster/MNISTCNN"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть MNISTCNN на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
               </a>
-              <p class="card-type">Backend <span class="project-bubble__status status--on-hold">На удержании</span></p>
-              <p class="project-tech">Python, FastAPI, GemeniAPI</p>
-              <p class="card-text">
-                Микросервис преобразующий названия мест в координаты (и наоборот). Проект нацелен на работу не только с RestAPI (отправить принять запрос), но и
-                с БД, кэшированием, Docker. Проект на удержании т.к. не уверен в его уникальности относительно других моих проектов.
-              </p>
             </article>
-
-            <article class="dashboard-card project-card">
-              <span class="card-index">11</span>
-              <a href="https://github.com/nicnuyster/GO_Tink_1" class="project-link" target="_blank" rel="noopener noreferrer">
+            <article class="project-card animate-fade-in-up" data-category="backend" style="animation-delay: 0.72s">
+              <a href="https://github.com/nicnuyster/webpet" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="Webpet на GitHub">
+                Webpet
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+              <div class="project-meta">
+                <span class="project-category">Backend</span>
+                <span class="project-status status--on-hold">На удержании</span>
+              </div>
+              <p class="project-stack">Python, FastAPI, Gemini API</p>
+              <p class="project-desc">Микросервис с интеграцией Gemini API. На удержании — вопрос уникальности относительно других проектов.</p>
+              <a
+                href="https://github.com/nicnuyster/webpet"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Webpet на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
+            </article>
+            <article class="project-card animate-fade-in-up" data-category="backend" style="animation-delay: 0.8s">
+              <a href="https://github.com/nicnuyster/GO_Tink_1" class="project-name" target="_blank" rel="noopener noreferrer" aria-label="Go_tink_1 на GitHub">
                 Go_tink_1
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
               </a>
-              <p class="card-type">Backend <span class="project-bubble__status status--completed">Завершено</span></p>
-              <p class="project-tech">Raw Golang</p>
-              <p class="card-text">Хост веб страницы используя только встроенные возможности Golang. Проект нацелен на развитие практических навыков.</p>
+              <div class="project-meta">
+                <span class="project-category">Backend</span>
+                <span class="project-status status--completed">Завершено</span>
+              </div>
+              <p class="project-stack">Raw Go</p>
+              <p class="project-desc">Хост веб-страницы с использованием только встроенных возможностей Go.</p>
+              <a
+                href="https://github.com/nicnuyster/GO_Tink_1"
+                class="project-github-icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Открыть Go_tink_1 на GitHub"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </a>
             </article>
           </div>
-
-          <p class="projects-note">
-            * Статус может быть изменен в любой момент. Для более точной информации о проекте используйте GitHub или свяжитесь со мной.
-          </p>
         </div>
       </section>
 
-      <section class="snap-section contact-section" id="section-4" data-index="4">
-        <div class="section-content">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">04 / Мои контакты</p>
-              <h2>Мои контакты</h2>
-            </div>
+      <!-- Section 4: Contact -->
+      <section class="section" id="section-4" data-index="4">
+        <div class="container">
+          <div class="contacts-header">
+            <h2>Мои контакты</h2>
+            <p class="contacts-subtitle">Не нашли ответы? Свяжитесь со мной</p>
           </div>
-
           <div class="contacts-grid">
-            <div class="contact-intro-card">
-              <p>Не нашли ответы на все интересующие вас вопросы? Свяжитесь со мной</p>
-            </div>
-
-            <a class="contact-card" href="https://t.me/alexshirmer" target="_blank" rel="noopener noreferrer">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="m21.4 4.6-3 14.1c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.8 12.6 2.2 11.2c-1-.3-1-1 .2-1.5L20.2 2.8c.8-.3 1.5.2 1.2 1.8Z"
-                  ></path>
-                </svg>
-              </span>
-              <span>
-                <strong>Телеграмм</strong>
-                <small>@alexshirmer - самый быстрый</small>
-              </span>
-            </a>
-
             <a
-              class="contact-card"
-              href="https://max.ru/u/f9LHodD0cOIsIGIQXzzEwSTJBnGekuV7ME9jiyPmvPCyoDmC7KzepE-10wE"
+              href="https://t.me/alexshirmer"
+              class="contact-card contact-card--priority animate-fade-in-up"
+              style="animation-delay: 0s"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Telegram: @alexshirmer"
             >
-              <span class="contact-icon contact-icon--text" aria-hidden="true">M</span>
-              <span>
-                <strong>МАХ</strong>
-                <small>- удобная альтернатива</small>
-              </span>
-            </a>
-
-            <a class="contact-card" href="https://tver.hh.ru/resume/6ae2d0c6ff0fb99d2a0039ed1f6844566e3032" target="_blank" rel="noopener noreferrer">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="8"></circle>
-                  <path d="M12 8v4l2.5 2.5"></path>
-                </svg>
-              </span>
-              <span><strong>HeadHanter</strong></span>
-            </a>
-
-            <a class="contact-card" href="https://github.com/nicnuyster" target="_blank" rel="noopener noreferrer">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  id="Livello_1"
+                  data-name="Livello 1"
+                  viewBox="0 0 240 240"
+                  width="20"
+                  height="20"
+                >
+                  <defs>
+                    <linearGradient id="linear-gradient" x1="120" y1="240" x2="120" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stop-color="#1d93d2" />
+                      <stop offset="1" stop-color="#38b0e3" />
+                    </linearGradient>
+                  </defs>
+                  <title>Telegram_logo</title>
+                  <circle cx="120" cy="120" r="120" fill="url(#linear-gradient)" />
+                  <path d="M81.229,128.772l14.237,39.406s1.78,3.687,3.686,3.687,30.255-29.492,30.255-29.492l31.525-60.89L81.737,118.6Z" fill="#c8daea" />
+                  <path d="M100.106,138.878l-2.733,29.046s-1.144,8.9,7.754,0,17.415-15.763,17.415-15.763" fill="#a9c6d8" />
                   <path
-                    d="M15 22v-3.9c.1-1-.3-1.9-1-2.6 3.3-.4 6.8-1.6 6.8-7.3a5.7 5.7 0 0 0-1.5-3.9c.2-.9.2-1.9-.1-2.8 0 0-1.2-.4-4 1.5a13.8 13.8 0 0 0-7.3 0c-2.8-1.9-4-1.5-4-1.5-.3.9-.3 1.9-.1 2.8a5.7 5.7 0 0 0-1.5 3.9c0 5.7 3.5 6.9 6.8 7.3-.6.6-.9 1.4-.9 2.3V22"
-                  ></path>
-                  <path d="M9 19c-3 .9-3-1.5-4.2-1.9"></path>
+                    d="M81.486,130.178,52.2,120.636s-3.5-1.42-2.373-4.64c.232-.664.7-1.229,2.1-2.2,6.489-4.523,120.106-45.36,120.106-45.36s3.208-1.081,5.1-.362a2.766,2.766,0,0,1,1.885,2.055,9.357,9.357,0,0,1,.254,2.585c-.009.752-.1,1.449-.169,2.542-.692,11.165-21.4,94.493-21.4,94.493s-1.239,4.876-5.678,5.043A8.13,8.13,0,0,1,146.1,172.5c-8.711-7.493-38.819-27.727-45.472-32.177a1.27,1.27,0,0,1-.546-.9c-.093-.469.417-1.05.417-1.05s52.426-46.6,53.821-51.492c.108-.379-.3-.566-.848-.4-3.482,1.281-63.844,39.4-70.506,43.607A3.21,3.21,0,0,1,81.486,130.178Z"
+                    fill="#fff"
+                  />
+                  <script xmlns="" />
                 </svg>
               </span>
-              <span><strong>GitHub</strong></span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">Telegram</span>
+                <span class="contact-card-value">@alexshirmer</span>
+                <span class="contact-card-hint">самый быстрый ответ</span>
+              </div>
             </a>
-
-            <a class="contact-card" href="mailto:shirmer.alex@gmail.com">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                  <path d="m3 7 9 6 9-6"></path>
-                </svg>
-              </span>
-              <span><strong>Почта shirmer.alex@gmail.com</strong></span>
-            </a>
-
-            <a class="contact-card" href="tel:+79157057591">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
+            <a
+              href="https://max.ru/u/f9LHodD0cOIsIGIQXzzEwSTJBnGekuV7ME9jiyPmvPCyoDmC7KzepE-10wE"
+              class="contact-card animate-fade-in-up"
+              style="animation-delay: 0.1s"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="MAX: Профиль"
+            >
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="20" height="20">
+                  <defs>
+                    <linearGradient id="b">
+                      <stop offset="0" stop-color="#00f" />
+                      <stop offset="1" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="a">
+                      <stop offset="0" stop-color="#4cf" />
+                      <stop offset=".662" stop-color="#53e" />
+                      <stop offset="1" stop-color="#93d" />
+                    </linearGradient>
+                    <linearGradient id="c" x1="117.847" x2="1000" y1="760.536" y2="500" gradientUnits="userSpaceOnUse" href="#a" />
+                    <radialGradient
+                      id="d"
+                      cx="-87.392"
+                      cy="1166.116"
+                      r="500"
+                      fx="-87.392"
+                      fy="1166.116"
+                      gradientTransform="rotate(51.356 1551.478 559.3)scale(2.42703433 1)"
+                      gradientUnits="userSpaceOnUse"
+                      href="#b"
+                    />
+                  </defs>
+                  <rect width="1000" height="1000" fill="url(#c)" ry="249.681" />
+                  <rect width="1000" height="1000" fill="url(#d)" ry="249.681" />
                   <path
-                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10.1a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 2Z"
-                  ></path>
+                    fill="#fff"
+                    fill-rule="evenodd"
+                    d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </span>
-              <span><strong>Телефон +7 (915) 705 75-91</strong></span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">MAX</span>
+                <span class="contact-card-value">Профиль</span>
+                <span class="contact-card-hint">удобная альтернатива</span>
+              </div>
+            </a>
+            <a
+              href="https://tver.hh.ru/resume/6ae2d0c6ff0fb99d2a0039ed1f6844566e3032"
+              class="contact-card animate-fade-in-up"
+              style="animation-delay: 0.2s"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="HeadHunter: Резюме"
+            >
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" version="1.1">
+                  <path
+                    d="M24 48c13.254 0 24-10.746 24-24S37.254 0 24 0 0 10.746 0 24s10.746 24 24 24m0 0"
+                    style="stroke: none; fill-rule: nonzero; fill: #ff0002; fill-opacity: 1"
+                  />
+                  <path
+                    d="M35.676 20.46c-.727-.75-1.758-1.16-3.02-1.16-1.562 0-2.765.637-3.46 1.829v-5.91h-3.63v16.203h3.63v-5.695c0-1.329.273-2.18.683-2.68.394-.5.953-.692 1.555-.692.53 0 .953.168 1.246.477.297.316.465.805.465 1.484v7.094h3.632v-7.808c0-1.329-.386-2.407-1.101-3.141M19.438 19.3c-1.567 0-2.77.637-3.461 1.829v-5.91h-3.63v16.203h3.63v-5.695c0-1.329.273-2.18.68-2.68.398-.5.956-.692 1.554-.692.535 0 .953.168 1.25.477.297.316.465.805.465 1.484v7.094h3.633v-7.808c0-1.329-.387-2.407-1.114-3.153-.715-.75-1.746-1.148-3.008-1.148m0 0"
+                    style="stroke: none; fill-rule: nonzero; fill: #fff; fill-opacity: 1"
+                  />
+                  <script xmlns="" />
+                </svg>
+              </span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">HeadHunter</span>
+                <span class="contact-card-value">Резюме</span>
+              </div>
+            </a>
+            <a
+              href="https://github.com/nicnuyster"
+              class="contact-card animate-fade-in-up"
+              style="animation-delay: 0.3s"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub: nicnuyster"
+            >
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+              </span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">GitHub</span>
+                <span class="contact-card-value">nicnuyster</span>
+              </div>
+            </a>
+            <a
+              href="mailto:shirmer.alex@gmail.com"
+              class="contact-card animate-fade-in-up"
+              style="animation-delay: 0.4s"
+              aria-label="Email: shirmer.alex@gmail.com"
+            >
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">Email</span>
+                <span class="contact-card-value">shirmer.alex@gmail.com</span>
+              </div>
+            </a>
+            <a href="tel:+79157057591" class="contact-card animate-fade-in-up" style="animation-delay: 0.5s" aria-label="Телефон: +7 (915) 705 75-91">
+              <span class="contact-card-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+              </span>
+              <div class="contact-card-info">
+                <span class="contact-card-label">Телефон</span>
+                <span class="contact-card-value">+7 (915) 705 75-91</span>
+              </div>
             </a>
           </div>
         </div>
       </section>
     </main>
 
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
   </body>
 </html>
