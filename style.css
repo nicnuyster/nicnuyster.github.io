@@ -823,6 +823,24 @@ button {
   display: block;
 }
 
+/* 1st slide */
+.carousel-slide:nth-child(1) img {
+  object-position: 50% 10%;
+  transform: scale(1);
+}
+
+/* 2nd slide */
+.carousel-slide:nth-child(2) img {
+  object-position: 50% 50%;
+  transform: scale(1);
+}
+
+/* 3rd slide */
+.carousel-slide:nth-child(3) img {
+  object-position: 50% 40%;
+  transform: scale(2);
+}
+
 /* Placeholder — показывается, если изображение не загрузилось */
 .carousel-placeholder {
   position: absolute;
