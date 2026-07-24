@@ -837,7 +837,7 @@ button {
 
 /* 3rd slide */
 .carousel-slide:nth-child(3) img {
-  object-position: 50% 40%;
+  object-position: 50% 20%;
   transform: scale(2);
 }
 
