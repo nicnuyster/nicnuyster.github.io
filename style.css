@@ -1004,7 +1004,7 @@ button {
 }
 
 .about-paragraphs p:last-child {
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 
 /* === БАБЛЫ / КАРТОЧКИ (общие) === */
